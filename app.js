@@ -5,11 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var bootstrap = require('bootstrap');
 
+// Set routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+var app = express();                                                                                                    
 
 // view engine setup
 app.engine('html', swig.renderFile);
