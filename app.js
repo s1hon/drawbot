@@ -17,6 +17,15 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 
+//  _____          _       
+// /  ___|        (_)      
+// \ `--.__      ___  __ _ 
+//  `--. \ \ /\ / / |/ _` |
+// /\__/ /\ V  V /| | (_| |
+// \____/  \_/\_/ |_|\__, |
+//                    __/ |
+//                   |___/  記得cache之後上線要打開
+
 // Swig will cache templates for you, but you can disable
 // that and use Express's caching instead, if you like:
 app.set('view cache', false);
