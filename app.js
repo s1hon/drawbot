@@ -78,4 +78,12 @@ app.use(function(err, req, res, next) {
 });
 
 
+// LiveReload
+var livereload = require('livereload').createServer({
+    exts: ['css', 'html', 'js']
+});
+
+livereload.watch(__dirname + "/views");
+livereload.watch(__dirname + "/public");
+
 module.exports = app;
