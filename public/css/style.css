@@ -1,8 +1,30 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sansserif;
+html {
+	height: 100vh;
 }
 
-a {
-  color: #00B7FF;
+.lf{
+	height: 100vh;
+	background: #57DAC2;
+}
+
+.lr{	
+	height: 100vh;
+	background: #334D5B;
+}
+
+.logo{
+    position: relative;
+    transform:translateY(-50%);
+	margin: 0px auto;
+    top:35%;
+	background-image: url(../img/logo.png);
+	height: 260px;
+	width: 740px;
+}
+
+@media (max-width: 992px) {
+	.lf{
+	height: 200px;
+		background: #57DAC2;
+	}
 }

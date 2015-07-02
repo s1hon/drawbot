@@ -83,7 +83,6 @@ var livereload = require('livereload').createServer({
     exts: ['css', 'html', 'js']
 });
 
-livereload.watch(__dirname + "/views");
-livereload.watch(__dirname + "/public");
+livereload.watch(__dirname);
 
 module.exports = app;
