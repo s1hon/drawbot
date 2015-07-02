@@ -21,6 +21,16 @@ html {
 	width: 740px;
 }
 
+.menu-btm{
+	position: relative;
+	top: 25px;
+	left: 25px;
+	
+	height: 59px;
+	width: 65px;
+	background-image: url(../img/menu-btm.png);
+}
+
 @media (max-width: 992px) {
 	.lf{
 	height: 200px;
