@@ -18,9 +18,9 @@
 {% block end_script %}
 <script>
 	function move_logo(){
-			  var div=$(".logo");
-				div.animate({top:'32%'},"slow");
-			  div.animate({top:'35%'},"slow",move_logo);
+		var div=$(".logo");
+		div.animate({top:'26%'},"slow");
+		div.animate({top:'32%'},"slow",move_logo);
 	}
 	$(document).ready(function(){
 		move_logo();

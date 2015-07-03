@@ -1,0 +1,36 @@
+html {
+	height: 100vh;
+}
+
+.container-fluid{
+
+	.lr{
+		height: 100vh;
+		background: #334D5B;
+		
+		@media (max-width: 992px) {
+			height: 200px;
+		}
+	}
+
+	.row{
+		.logo{
+		    position: relative;
+			margin: 0px auto;
+		    top:32%;
+			background-image: url(../img/logo.png);
+			height: 260px;
+			width: 740px;
+		}
+
+		.menu-btm{
+			position: relative;
+			top: 25px;
+			left: 25px;
+			
+			height: 59px;
+			width: 65px;
+			background-image: url(../img/menu-btm.png);
+		}
+	}
+}
