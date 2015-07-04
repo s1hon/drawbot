@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="container-fluid">
-	<div class="zero row">
+
+	<div id="index-logo" class="row">
 		<div class="col-md-12 lr">
 			<div class="menu-btm">
 			</div>
@@ -13,14 +14,20 @@
 		</div>	
 	</div>
 
-	<div id="side-bar">
+	<div id="side-bar" class="container">
 		<div class="row">
 			<div class="menu-btm-dark">
-
-			</div>	
+			</div>
+			<div class="menu-logo">
+			</div>
 		</div>
-
+		<div class="row">
+			<div class="print-status">
+				<p>812AA 列印中</p>
+			</div>
+		</div>
 	</div>
+
 </div>
 {% endblock %}
 
@@ -32,21 +39,30 @@
 		div.animate({top:'32%'},"slow",move_logo);
 	}
 
+	function menu_control(){
+		if ( $("#side-bar").offset().left < 0 ){
+			$("#side-bar").animate({left:'0px'},"slow");
+		}else{
+			$("#side-bar").animate({left:'-400px'},"slow");
+		}
+	}
+
+
 	$(document).ready(function(){
 		move_logo();
 	});
 	
 	$( ".menu-btm" ).click(function() {
-		if ( $("#side-bar").offset().left < 0 ){
-			$("#side-bar").animate({left:'0px'},"slow");
-		}else{
-			$("#side-bar").animate({left:'-350px'},"slow");
-		}
+		menu_control();
 	});
 
-	$( ".container-fluid .row" ).click(function(){
+	$( ".menu-btm-dark" ).click(function() {
+		menu_control();
+	});
+
+	$( ".container-fluid #index-logo" ).click(function(){
 		if ( $("#side-bar").offset().left >= 0 ){
-			$("#side-bar").animate({left:'-350px'},"slow");
+			$("#side-bar").animate({left:'-400px'},"slow");
 		}
 	});
 </script>
