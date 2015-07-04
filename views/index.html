@@ -4,13 +4,22 @@
 
 {% block content %}
 <div class="container-fluid">
-	<div class="row">
+	<div class="zero row">
 		<div class="col-md-12 lr">
 			<div class="menu-btm">
 			</div>
 			<div class="logo">
 			</div>
 		</div>	
+	</div>
+
+	<div id="side-bar">
+		<div class="row">
+			<div class="menu-btm-dark">
+
+			</div>	
+		</div>
+
 	</div>
 </div>
 {% endblock %}
@@ -22,8 +31,23 @@
 		div.animate({top:'26%'},"slow");
 		div.animate({top:'32%'},"slow",move_logo);
 	}
+
 	$(document).ready(function(){
 		move_logo();
+	});
+	
+	$( ".menu-btm" ).click(function() {
+		if ( $("#side-bar").offset().left < 0 ){
+			$("#side-bar").animate({left:'0px'},"slow");
+		}else{
+			$("#side-bar").animate({left:'-350px'},"slow");
+		}
+	});
+
+	$( ".container-fluid .row" ).click(function(){
+		if ( $("#side-bar").offset().left >= 0 ){
+			$("#side-bar").animate({left:'-350px'},"slow");
+		}
 	});
 </script>
 {% endblock %}

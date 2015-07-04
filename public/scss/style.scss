@@ -1,8 +1,20 @@
+$side-bar-color: #57DAC2;
+
 html {
 	height: 100vh;
 }
 
 .container-fluid{
+	
+	#side-bar{
+		height: 100vh;
+		float: left;
+		position: fixed;
+		top: 0px;
+		left: -350px;
+		width: 350px;
+		background: $side-bar-color;
+	}
 
 	.lr{
 		height: 100vh;
@@ -26,11 +38,20 @@ html {
 		.menu-btm{
 			position: relative;
 			top: 25px;
-			left: 25px;
-			
+			left: 10px;
 			height: 59px;
 			width: 65px;
 			background-image: url(../img/menu-btm.png);
 		}
+
+		.menu-btm-dark{
+			position: relative;
+			top: 25px;
+			left: 40px;
+			height: 59px;
+			width: 65px;
+			background-image: url(../img/menu-btm-dark.png);
+		}
 	}
+
 }
