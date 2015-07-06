@@ -9,6 +9,24 @@ html {
 	height: 100vh;
 }
 
+.ripple { /*stylings for the circular overlay*/
+  position: relative;
+  top: 0px;
+  left: 0px;
+  border-radius: 100%;
+  width: 0;
+  height: 0;
+  background: rgba(0,0,0, .05);
+  -webkit-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+}
+
+.notransition { /*used to reset the ripple without an animatiion*/
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
+
 .container-fluid{
 	
 	#side-bar{
@@ -46,16 +64,14 @@ html {
 
 		.row{
 			.side-bar-icon{
-				margin: 0 0 30px 0;
 				float: left;
-				height: 150px;
+				height: 180px;
 				width: 200px;
-				background-repeat: no-repeat;
-				background-position: center center;
+				overflow: hidden;
 
 				p{
 					position: relative;
-					top: 130px;
+					top: 120px;
 					text-align:center;
 				    font-size: 38px;
 				    color: $menu-color-light;
@@ -72,48 +88,48 @@ html {
 			.icon-add{
 				background: url(../img/add-icon.png);
 				background-repeat: no-repeat;
-				background-position: center center;
+				background-position: center 20px;
 
 				&:hover{
 					background: url(../img/add-icon-dark.png);
 					background-repeat: no-repeat; 
-					background-position: center center;
+					background-position: center 20px;
 				}
 			}
 
 			.icon-edit{
 				background: url(../img/edit-icon.png);
 				background-repeat: no-repeat; 
-				background-position: center center;
+				background-position: center 20px;
 
 				&:hover{
 					background: url(../img/edit-icon-dark.png);
 					background-repeat: no-repeat; 
-					background-position: center center;
+					background-position: center 20px;
 				}
 			}
 
 			.icon-status{
 				background: url(../img/status-icon.png);
 				background-repeat: no-repeat; 
-				background-position: center center;
+				background-position: center 20px;
 
 				&:hover{
 					background: url(../img/status-icon-dark.png);
 					background-repeat: no-repeat; 
-					background-position: center center;
+					background-position: center 20px;
 				}
 			}
 
 			.icon-control{
 				background: url(../img/control-icon.png);
 				background-repeat: no-repeat; 
-				background-position: center center;
+				background-position: center 20px;
 
 				&:hover{
 					background: url(../img/control-icon-dark.png);
 					background-repeat: no-repeat; 
-					background-position: center center;
+					background-position: center 20px;
 				}
 			}
 		}		
