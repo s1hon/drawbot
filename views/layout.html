@@ -1,39 +1,75 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}My Site{% endblock %}</title>
-  
-  {% block head %}
-  <link rel="stylesheet" href="css/style.css">
-  {% endblock %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}My Site{% endblock %}</title>
+	
+	{% block head %}
+	<link rel="stylesheet" href="css/style.css">
+	{% endblock %}
 
-  <!-- Bootstrap -->
-  <link href="css/bootstrap.css" rel="stylesheet">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->  
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->  
 </head>
 <body>
 
-  <div class="container-fluid">
-    {% block content %}
-    {% endblock %}
+	<div class="container-fluid">
+		<div id="index-logo" class="row">
+			<div class="col-md-12 lr">
+				<div class="menu-btm">
+				</div>
+				{% block content %}
+				{% endblock %}
+			</div>  
+		</div>
+		
 
-    {% include 'side-bar.html' %}
-  </div>
+		{% include 'side-bar.html' %}
+	</div>
 
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
 
-  {% block end_script %}
-  {% endblock %}
+	{% block end_script %}
+	{% endblock %}
+
+	<script>
+		function move_logo(){
+		var div=$(".logo");
+		div.animate({top:'26%'},"slow");
+		div.animate({top:'32%'},"slow",move_logo);
+		}
+
+		function menu_control(){
+			if ( $("#side-bar").offset().left < 0 ){
+				$("#side-bar").animate({left:'0px'},"slow");
+			}else{
+				$("#side-bar").animate({left:'-400px'},"slow");
+			}
+		}
+
+
+		$(document).ready(function(){
+			move_logo();
+		});
+		
+		$( ".menu-btm" ).click(function() {
+			menu_control();
+		});
+
+		$( ".menu-btm-dark" ).click(function() {
+			menu_control();
+		});
+	</script>
 </body>
 </html>

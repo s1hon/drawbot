@@ -3,45 +3,12 @@
 {% block title %} {{ title|title }} {% endblock %}
 
 {% block content %}
-	<div id="index-logo" class="row">
-		<div class="col-md-12 lr">
-			<div class="menu-btm">
-			</div>
-			<div class="logo">
-			</div>
-		</div>	
+	<div class="logo">
 	</div>
 {% endblock %}
 
 {% block end_script %}
 <script>
-	function move_logo(){
-		var div=$(".logo");
-		div.animate({top:'26%'},"slow");
-		div.animate({top:'32%'},"slow",move_logo);
-	}
-
-	function menu_control(){
-		if ( $("#side-bar").offset().left < 0 ){
-			$("#side-bar").animate({left:'0px'},"slow");
-		}else{
-			$("#side-bar").animate({left:'-400px'},"slow");
-		}
-	}
-
-
-	$(document).ready(function(){
-		move_logo();
-	});
-	
-	$( ".menu-btm" ).click(function() {
-		menu_control();
-	});
-
-	$( ".menu-btm-dark" ).click(function() {
-		menu_control();
-	});
-
 	$( ".container-fluid #index-logo" ).click(function(){
 		if ( $("#side-bar").offset().left >= 0 ){
 			$("#side-bar").animate({left:'-400px'},"slow");
