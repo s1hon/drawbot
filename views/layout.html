@@ -87,10 +87,14 @@
 			$(".button-demo").click(function(e){
 				var $clicked = $(this);
 
+				//let icon become dark
+				$clicked.find("path").css({ fill: "#1E4C44" });
+				$clicked.find("p").css({ color: "#1E4C44" });
+
 				//gets the clicked coordinates
 				var offset = $clicked.offset();
 				var relativeX = (e.pageX - offset.left);
-				var relativeY = (e.pageY - offset.top);
+				var relativeY = (e.pageY - offset.top-200);
 				var width = $clicked.width();
 
 
@@ -113,8 +117,15 @@
 				$ripple[0].offsetHeight;
 				$clicked.removeClass("hovered");
 				$ripple.removeClass("notransition");
+				$clicked.find("path").css({ fill: "#49B29E" });
+				$clicked.find("p").css({ color: "#49B29E" });
 				  }, 300 );
+
+				//let icon become dark
+					
 			});
+
+
 		});                                 
 	</script>
 </body>

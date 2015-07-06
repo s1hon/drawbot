@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Add-page-menu" sketch:type="MSArtboardGroup" transform="translate(-54.000000, -294.000000)" fill="#49B29E">
+            <path d="M79,300.25 L54,352.3125 L54,394 L104,394 L154,394 L154,352.3125 L128.8125,300.25 L116.5,300.25 L116.5,312.75 L124.8125,312.75 L145.6875,356.5 L120.6875,356.5 L104,356.5 L87.3125,356.5 L62.3125,356.5 L83.1875,312.75 L91.5,312.75 L91.5,300.25 L79,300.25 L79,300.25 Z M72.75,362.75 L79,362.75 L79,387.75 L72.75,387.75 L72.75,362.75 L72.75,362.75 Z M135.25,362.75 L135.25,387.75 L129,387.75 L129,362.75 L135.25,362.75 L135.25,362.75 Z M91.5,362.75 L97.75,362.75 L97.75,387.75 L91.5,387.75 L91.5,362.75 L91.5,362.75 Z M110.25,362.75 L116.5,362.75 L116.5,387.75 L110.25,387.75 L110.25,362.75 L110.25,362.75 Z M85.25,325.25 L104,344 L124.8125,325.25 L110.25,325.25 L110.25,300.25 C110.25,296.0625 108.1875,294 104,294 C99.8125,294 97.75,298.1875 97.75,302.3125 L97.75,325.25 L85.25,325.25 L85.25,325.25 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

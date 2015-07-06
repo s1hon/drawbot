@@ -10,6 +10,7 @@ gulp.task('server', function() {
     // Restart the server when file changes 
     gulp.watch(['views/*.html'], server.notify);
     gulp.watch(['public/css/*.css'], server.notify);
+    gulp.watch(['public/img/*.svg'], server.notify);
     
     gulp.watch(['public/scss/*.scss'],function(event){
     	gulp.run('styles');

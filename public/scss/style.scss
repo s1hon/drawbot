@@ -63,6 +63,7 @@ html {
 		}
 
 		.row{
+
 			.side-bar-icon{
 				float: left;
 				height: 180px;
@@ -70,68 +71,17 @@ html {
 				overflow: hidden;
 
 				p{
-					position: relative;
-					top: 120px;
 					text-align:center;
 				    font-size: 38px;
 				    color: $menu-color-light;
 				}
-
-   			    &:hover{
-   			    	p{
-				    	color: $menu-color-dark;
-   			    	}
-			    }
-
-			}
-
-			.icon-add{
-				background: url(../img/add-icon.png);
-				background-repeat: no-repeat;
-				background-position: center 20px;
-
-				&:hover{
-					background: url(../img/add-icon-dark.png);
-					background-repeat: no-repeat; 
-					background-position: center 20px;
+				
+				.icon{
+					width: 50%;
+					margin: 30px auto auto auto;
 				}
 			}
 
-			.icon-edit{
-				background: url(../img/edit-icon.png);
-				background-repeat: no-repeat; 
-				background-position: center 20px;
-
-				&:hover{
-					background: url(../img/edit-icon-dark.png);
-					background-repeat: no-repeat; 
-					background-position: center 20px;
-				}
-			}
-
-			.icon-status{
-				background: url(../img/status-icon.png);
-				background-repeat: no-repeat; 
-				background-position: center 20px;
-
-				&:hover{
-					background: url(../img/status-icon-dark.png);
-					background-repeat: no-repeat; 
-					background-position: center 20px;
-				}
-			}
-
-			.icon-control{
-				background: url(../img/control-icon.png);
-				background-repeat: no-repeat; 
-				background-position: center 20px;
-
-				&:hover{
-					background: url(../img/control-icon-dark.png);
-					background-repeat: no-repeat; 
-					background-position: center 20px;
-				}
-			}
 		}		
 	}
 
