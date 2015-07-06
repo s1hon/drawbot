@@ -14,35 +14,7 @@
 		</div>	
 	</div>
 
-	<div id="side-bar" class="container">
-		<div class="row">
-			<div class="menu-btm-dark">
-			</div>
-			<div class="menu-logo">
-			</div>
-		</div>
-		<div class="row">
-			<div class="print-status">
-				<p>812AA 列印中</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="side-bar-icon icon-add">
-				<p>新增列印</p>
-			</div>
-			<div class="side-bar-icon icon-edit">
-				<p>修改列印</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="side-bar-icon icon-status">
-				<p>列印狀態</p>
-			</div>
-			<div class="side-bar-icon icon-control">
-				<p>後台管理</p>
-			</div>
-		</div>
-	</div>
+	{% include 'side-bar.html' %}
 
 </div>
 {% endblock %}
