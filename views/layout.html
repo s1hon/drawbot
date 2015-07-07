@@ -21,16 +21,10 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<div id="index-logo" class="row">
-			<div class="col-md-12 lr">
-				<div class="menu-btm">
-				</div>
-				{% block content %}
-				{% endblock %}
-			</div>  
+		{% block content %}
+		{% endblock %}
+		<div class="menu-btm">
 		</div>
-		
-
 		{% include 'side-bar.html' %}
 	</div>
 

@@ -101,15 +101,15 @@ html {
 			width: 740px;
 		}
 
-		.menu-btm{
-			position: relative;
-			top: 25px;
-			left: 10px;
-			height: 59px;
-			width: 65px;
-			background-image: url(../img/menu-btm.png);
-		}
-
 	}
-
+	
+	.menu-btm{
+		position: fixed;
+		top: 25px;
+		left: 25px;
+		height: 59px;
+		width: 65px;
+		background-image: url(../img/menu-btm.png);
+	}
 }
+
