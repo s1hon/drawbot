@@ -14,7 +14,6 @@ gulp.task('server', function() {
     });
 
     gulp.watch(['views/*.html'], server.notify);
-    gulp.watch(['public/css/*.css'], server.notify);
     gulp.watch(['public/img/*.svg'], server.notify);
 
     gulp.watch(['app.js', 'routes/*.js'], [server.run]);

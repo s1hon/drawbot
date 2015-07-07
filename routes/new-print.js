@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('new-print', { title: 'Drawbot' });
+  res.render('new-print', { title: '新增列印|Drawbot' });
 });
 
 module.exports = router;
