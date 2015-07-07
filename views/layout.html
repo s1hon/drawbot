@@ -42,11 +42,11 @@
 	{% endblock %}
 
 	<script>
-		function move_logo(){
-		var div=$(".logo");
-		div.animate({top:'26%'},"slow");
-		div.animate({top:'32%'},"slow",move_logo);
-		}
+		$( ".container-fluid #index-logo" ).click(function(){
+			if ( $("#side-bar").offset().left >= 0 ){
+				$("#side-bar").animate({left:'-400px'},"slow");
+			}
+		});
 
 		function menu_control(){
 			if ( $("#side-bar").offset().left < 0 ){
