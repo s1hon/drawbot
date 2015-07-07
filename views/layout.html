@@ -56,10 +56,6 @@
 			}
 		}
 
-		$(document).ready(function(){
-			move_logo();
-		});
-		
 		$( ".menu-btm" ).click(function() {
 			menu_control();
 		});
@@ -119,6 +115,18 @@
 				$ripple.removeClass("notransition");
 				$clicked.find("path").css({ fill: "#49B29E" });
 				$clicked.find("p").css({ color: "#49B29E" });
+
+				if( $clicked.attr('id')=='btm-new' ){
+					$(location).attr('href','./new-print');
+				}else if( $clicked.attr('id')=='btm-edit' ){
+
+				}else if( $clicked.attr('id')=='btm-status' ){
+
+				}else if( $clicked.attr('id')=='btm-control' ){
+
+				}
+				
+
 				  }, 300 );
 
 				//let icon become dark

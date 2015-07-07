@@ -9,6 +9,10 @@
 
 {% block end_script %}
 <script>
+	$(document).ready(function(){
+		move_logo();
+	});
+
 	function move_logo(){
 		var div=$(".logo");
 		div.animate({top:'26%'},"slow");
