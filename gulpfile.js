@@ -7,16 +7,15 @@ gulp.task('server', function() {
 	// Start the server at the beginning of the task 
 	server.run(['bin/www']);
 
-    // Restart the server when file changes 
-    gulp.watch(['views/*.html'], server.notify);
-    gulp.watch(['public/css/*.css'], server.notify);
-    gulp.watch(['public/img/*.svg'], server.notify);
-    
+    // Restart the server when file changes    
     gulp.watch(['public/scss/*.scss'],function(event){
     	gulp.run('styles');
         server.notify(event);
     });
 
+    gulp.watch(['views/*.html'], server.notify);
+    gulp.watch(['public/css/*.css'], server.notify);
+    gulp.watch(['public/img/*.svg'], server.notify);
 
     gulp.watch(['app.js', 'routes/*.js'], [server.run]);
 });
