@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var server = require('gulp-express');
 var sass = require('gulp-ruby-sass');
 var minifyCSS = require('gulp-minify-css');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('server', function() {
 	// Start the server at the beginning of the task 
@@ -24,6 +25,7 @@ gulp.task('styles', function(){
 		.on('error', function (err) {
 	      console.error('Error', err.message);
 	   	})
+	    .pipe(autoprefixer('last 2 version'))
 		.pipe(minifyCSS())
 		.pipe(gulp.dest('public/css/'));
 });
