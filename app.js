@@ -16,14 +16,8 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 
 // Set routes
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var new_print = require('./routes/new-print');
-// var io_listen = require('./routes/io_listen')(app, io);	
-
-app.use('/', routes);
-app.use('/users', users);
-app.use('/new-print',new_print);
+var routes = require('./routes/index')(app,io);
+var io_listen = require('./routes/io_listen')(io);	
 
 // view engine setup
 app.engine('html', swig.renderFile);
