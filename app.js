@@ -6,12 +6,24 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 
+// Set app & server
+var app = express();                                                                                                    
+var debug = require('debug')('drawbot-frontend:server');
+var http = require('http');
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+var server = http.createServer(app);
+var io = require('socket.io')(server);
+
 // Set routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var new_print = require('./routes/new-print');
+// var io_listen = require('./routes/io_listen')(app, io);	
 
-var app = express();                                                                                                    
+app.use('/', routes);
+app.use('/users', users);
+app.use('/new-print',new_print);
 
 // view engine setup
 app.engine('html', swig.renderFile);
@@ -43,10 +55,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/users', users);
-app.use('/new-print',new_print);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -89,21 +97,6 @@ app.use(function(err, req, res, next) {
 //     \__/  \__/         \__/  \__/         \__/  \__/     
 //
                                                                                           
-var debug = require('debug')('drawbot-frontend:server');
-var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
