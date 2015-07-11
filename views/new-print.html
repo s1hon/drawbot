@@ -5,12 +5,28 @@
 {% block content %}
 		<div id="index-logo" class="row">
 			<div class="col-md-12 lr">
+				<div class="cam-posi">
+					<div id="camera" class="cam-preview col-md-offset-1">
+						<p>攝影機啟動中...</p>	
+					</div>
+
+					<div class="cam-control">
+						cam-control
+					</div>
+				</div>
 			</div>
 		</div>
 {% endblock %}
 
 {% block end_script %}
 <script>
-
+	var socket = io('http://localhost:3000');
+	socket.emit('new-print', { camera: 'open' });
+	socket.on('server', function (data){
+		if (data.camera == 'ok'){
+			console.log('camera ok!');
+			$('#camera').html('<img src="http://localhost:8080/?action=stream" height="768" width="1024" />');
+		}
+	});
 </script>
 {% endblock %}

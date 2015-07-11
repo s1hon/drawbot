@@ -111,5 +111,37 @@ html {
 		width: 65px;
 		background-image: url(../img/menu-btm.png);
 	}
+
+	// new-print.html
+
+	.cam-posi{
+		position: relative;
+		top: 50px;
+	}
+
+	.cam-preview{
+		height: 768px;
+		width: 1024px;
+		background: #636363;
+		float: left;
+
+		p{
+		    position: relative;
+			top: 40%;
+			text-align:center;
+		    font-size: 100px;
+		    color: #888;
+		}
+
+	}
+
+	.cam-control{
+		position: relative;
+		left: 50px;
+		float: left;
+		height: 768px;
+		width: 480px;
+		background: #F00;
+	}
 }
 
