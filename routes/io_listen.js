@@ -12,7 +12,7 @@ module.exports = function(io) {
 		socket.on('new-print', function (data) {
 			if(data.camera=='open'){
 				console.log('{ request: "Camera open request." }');
-				setTimeout(function(){camera_open(socket);}, 5000);
+				setTimeout(function(){camera_open(socket);}, 2000);
 			}
 		});
 

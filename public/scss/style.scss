@@ -117,6 +117,19 @@ html {
 	.cam-posi{
 		position: relative;
 		top: 50px;
+
+		#camera{
+			#video {
+			  border: 1px solid black;
+			  box-shadow: 2px 2px 3px black;
+			  width:1024px;
+			  height:768px;
+			}
+		}
+
+		#canvas {
+			display:none;
+		}
 	}
 
 	.cam-preview{
