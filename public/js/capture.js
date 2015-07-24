@@ -1,133 +1,117 @@
+var width = 320;
+var height = 0;
 
-  // The width and height of the captured photo. We will set the
-  // width to the value defined here, but the height will be
-  // calculated based on the aspect ratio of the input stream.
+var streaming = false;
 
-  var width = 320;    // We will scale the photo width to this
-  var height = 0;     // This will be computed based on the input stream
+var video = null;
+var canvas = null;
+var photo = null;
+var startbutton = null;
+var my_strm = null;
+var videostream = null;
 
-  // |streaming| indicates whether or not we're currently streaming
-  // video from the camera. Obviously, we start at false.
+function startup() {
 
-  var streaming = false;
+	startbutton = document.getElementById('startbutton');
+	restartbutton = document.getElementById('restartbutton');
 
-  // The various HTML elements we need to configure or control. These
-  // will be set by the startup() function.
+	getMedia();
 
-  var video = null;
-  var canvas = null;
-  var photo = null;
-  var startbutton = null;
-  var my_strm = null;
-  var videostream = null;
+	startbutton.addEventListener('click', function(ev){
+		takepicture();
+		ev.preventDefault();
+	}, false);
 
-  function startup() {
+	restartbutton.addEventListener('click', function(ev){
+		restart();
+		ev.preventDefault();
+	}, false);
 
-    startbutton = document.getElementById('startbutton');
-    restartbutton = document.getElementById('restartbutton');
-
-    getMedia();
-
-
-
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      ev.preventDefault();
-    }, false);
-
-    restartbutton.addEventListener('click', function(ev){
-      restart();
-      ev.preventDefault();
-    }, false);
+}
 
 
-    
-    // clearphoto();
-  }
+function getMedia() {
 
+	video = document.getElementById('video');
+	canvas = document.getElementById('canvas');
+	photo = document.getElementById('photo');
 
-  function getMedia() {
+	navigator.getMedia = ( navigator.getUserMedia ||
+	                       navigator.webkitGetUserMedia ||
+	                       navigator.mozGetUserMedia ||
+	                       navigator.msGetUserMedia);
 
-    video = document.getElementById('video');
-    canvas = document.getElementById('canvas');
-    photo = document.getElementById('photo');
+	navigator.getMedia(
+		{
+		video: true,
+		audio: false
+		},
+		function(stream) {
+		videostream = stream;
+		if (navigator.mozGetUserMedia) {
+		  video.mozSrcObject = stream;
+		} else {
+		  var vendorURL = window.URL || window.webkitURL;
+		  video.src = vendorURL.createObjectURL(stream);
+		}
+		video.play();
+		},
+		function(err) {
+		console.log("An error occured! " + err);
+		}
+	);
 
-    navigator.getMedia = ( navigator.getUserMedia ||
-                           navigator.webkitGetUserMedia ||
-                           navigator.mozGetUserMedia ||
-                           navigator.msGetUserMedia);
+	video.addEventListener('canplay', function(ev){
+		if (!streaming) {
+			height = video.videoHeight / (video.videoWidth/width);
 
-    navigator.getMedia(
-      {
-        video: true,
-        audio: false
-      },
-      function(stream) {
-        videostream = stream;
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream;
-        } else {
-          var vendorURL = window.URL || window.webkitURL;
-          video.src = vendorURL.createObjectURL(stream);
-        }
-        video.play();
-      },
-      function(err) {
-        console.log("An error occured! " + err);
-      }
-    );
+			// Firefox currently has a bug where the height can't be read from
+			// the video, so we will make assumptions if this happens.
 
-    video.addEventListener('canplay', function(ev){
-      if (!streaming) {
-        height = video.videoHeight / (video.videoWidth/width);
-      
-        // Firefox currently has a bug where the height can't be read from
-        // the video, so we will make assumptions if this happens.
-      
-        if (isNaN(height)) {
-          height = width / (4/3);
-        }
-      
-        video.setAttribute('width', width);
-        video.setAttribute('height', height);
-        canvas.setAttribute('width', width);
-        canvas.setAttribute('height', height);
-        streaming = true;
-      }
-    }, false);
+			if (isNaN(height)) {
+				height = width / (4/3);
+			}
 
-  }
+			video.setAttribute('width', width);
+			video.setAttribute('height', height);
+			canvas.setAttribute('width', width);
+			canvas.setAttribute('height', height);
+			streaming = true;
+		}
+	}, false);
 
-  // function clearphoto() {
-    
-  //   var context = canvas.getContext('2d');
-  //   context.fillStyle = "#AAA";
-  //   context.fillRect(0, 0, canvas.width, canvas.height);
+}
 
-  //   var data = canvas.toDataURL('image/png');
-  //   photo.setAttribute('src', data);
+// function clearphoto() {
 
-  // }
-  
-  function takepicture() {
-    
-    var context = canvas.getContext('2d');
-    if (width && height) {
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-    
-      var data = canvas.toDataURL('image/png');
+//   var context = canvas.getContext('2d');
+//   context.fillStyle = "#AAA";
+//   context.fillRect(0, 0, canvas.width, canvas.height);
 
-      $('#camera').html(' <img id="photo" class="cam-preview" src="'+data+'"> ');
-      videostream.stop();
-    }
+//   var data = canvas.toDataURL('image/png');
+//   photo.setAttribute('src', data);
 
-  }
+// }
 
-  function restart(){
+function takepicture() {
 
-    $('#camera').html('<video id="video">Video stream not available.</video>');
-    getMedia();
+	var context = canvas.getContext('2d');
+	if (width && height) {
+		canvas.width = width;
+		canvas.height = height;
+		context.drawImage(video, 0, 0, width, height);
 
-  }
+		var data = canvas.toDataURL('image/png');
+
+		$('#camera').html(' <img id="photo" class="cam-preview" src="'+data+'"> ');
+		videostream.stop();
+	}
+
+}
+
+function restart(){
+
+	$('#camera').html('<video id="video">Video stream not available.</video>');
+	getMedia();
+
+}
