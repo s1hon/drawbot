@@ -47,17 +47,18 @@ function getMedia() {
 		audio: false
 		},
 		function(stream) {
-		videostream = stream;
-		if (navigator.mozGetUserMedia) {
-		  video.mozSrcObject = stream;
-		} else {
-		  var vendorURL = window.URL || window.webkitURL;
-		  video.src = vendorURL.createObjectURL(stream);
-		}
-		video.play();
+			videostream = stream;
+			if (navigator.mozGetUserMedia) {
+			  video.mozSrcObject = stream;
+			} else {
+			  var vendorURL = window.URL || window.webkitURL;
+			  video.src = vendorURL.createObjectURL(stream);
+			}
+			video.play();
+			$('.take_pic').toggle();
 		},
 		function(err) {
-		console.log("An error occured! " + err);
+			console.log("An error occured! " + err);
 		}
 	);
 
@@ -77,7 +78,7 @@ function getMedia() {
 			canvas.setAttribute('width', width);
 			canvas.setAttribute('height', height);
 			streaming = true;
-		}
+			}
 	}, false);
 
 }
@@ -105,6 +106,9 @@ function takepicture() {
 
 		$('#camera').html(' <img id="photo" class="cam-preview" src="'+data+'"> ');
 		videostream.stop();
+
+		$('.take_pic').toggle();
+		$('.chose_pic').toggle();
 	}
 
 }
@@ -112,6 +116,7 @@ function takepicture() {
 function restart(){
 
 	$('#camera').html('<video id="video">Video stream not available.</video>');
+	$('.chose_pic').toggle();
 	getMedia();
 
 }

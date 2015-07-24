@@ -145,16 +145,45 @@ html {
 		    font-size: 100px;
 		    color: #888;
 		}
-		
+
 	}
 
 	.cam-control{
 		position: relative;
+		top: 450px;
 		left: 50px;
 		float: left;
-		height: 768px;
+		height: 568px;
 		width: 480px;
-		background: #F00;
+		// background: #F00;
+
+		p{
+		text-align:center;
+	    font-size: 50px;
+	    color: $font-color;
+
+		    #startbutton{
+				width: 300px;
+			}
+		}
+
+		.take_pic{
+			display: none;
+		}
+
+		.chose_pic{
+			display: none;
+			position: relative;
+			top: 80px;
+
+			button{
+				width: 200px;
+			}
+
+		}
+
+
 	}
+
 }
 
