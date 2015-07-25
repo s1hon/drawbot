@@ -20,7 +20,7 @@ module.exports = function(io) {
 
 
 	function camera_open(socket){
-		socket.emit('server', {camera: 'ok'});	
+		socket.emit('server', {camera: 'READY'});	
 	}
 
 

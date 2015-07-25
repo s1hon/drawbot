@@ -6,20 +6,21 @@
 		<div id="index-logo" class="row">
 			<div class="col-md-12 lr">
 				<div class="cam-posi">
+
 					<div id="camera" class="cam-preview col-md-offset-1">
 						<p>攝影機啟動中...</p>	
 					</div>
 
-
-					<canvas id="canvas">
-					</canvas>
+					<canvas id="canvas"></canvas>
 
 					<div class="cam-control">
 
 						<div class="take_pic">
 							<p>準備完成後</p>
 							<p>請按下拍照鍵</p>
-					    <p><button type="button" id="startbutton" class="btn btn-info btn-lg">拍照</button></p>
+						    <p>
+							    <button type="button" id="startbutton" class="btn btn-info btn-lg">拍照</button>
+						    </p>
 						</div>
 						
 						<div class="chose_pic">
@@ -31,6 +32,7 @@
 						</div>
 
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -43,14 +45,15 @@
 	var socket = io('http://localhost:3000');
 	socket.emit('new-print', { camera: 'open' });
 	socket.on('server', function (data){
-		if (data.camera == 'ok'){
-			console.log('camera ok!');
+		if (data.camera == 'READY'){
+			console.log('[CAMERA]',data.camera);
 			$('#camera').html('<video id="video">Video stream not available.</video>');
 			startup();
 		}
+
+		if (data.server){
+			console.log(data.server);
+		}
 	});
-
-
-
 </script>
 {% endblock %}

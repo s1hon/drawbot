@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var swig = require('swig');
 
 // Set app & server
-var app = express();                                                                                                    
+var app = express();                                                                           
 var debug = require('debug')('drawbot-frontend:server');
 var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
@@ -15,9 +15,17 @@ app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
-// Set routes
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
+
+//    ___  ____  __  ________________
+//   / _ \/ __ \/ / / /_  __/ __/ __/
+//  / , _/ /_/ / /_/ / / / / _/_\ \  
+// /_/|_|\____/\____/ /_/ /___/___/  
+
 var routes = require('./routes/index')(app,io);
-var io_listen = require('./routes/io_listen')(io);	
+var io_listen = require('./routes/io_listen')(io);
 
 // view engine setup
 app.engine('html', swig.renderFile);
@@ -45,8 +53,6 @@ swig.setDefaults({ cache: false });
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

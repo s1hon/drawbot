@@ -9,11 +9,13 @@ var photo = null;
 var startbutton = null;
 var my_strm = null;
 var videostream = null;
+var data_pic = null;
 
 function startup() {
 
 	startbutton = document.getElementById('startbutton');
 	restartbutton = document.getElementById('restartbutton');
+	usebutton = document.getElementById('usebutton');
 
 	getMedia();
 
@@ -24,6 +26,11 @@ function startup() {
 
 	restartbutton.addEventListener('click', function(ev){
 		restart();
+		ev.preventDefault();
+	}, false);
+
+	usebutton.addEventListener('click', function(ev){
+		usepicture();
 		ev.preventDefault();
 	}, false);
 
@@ -102,9 +109,9 @@ function takepicture() {
 		canvas.height = height;
 		context.drawImage(video, 0, 0, width, height);
 
-		var data = canvas.toDataURL('image/png');
+		data_pic = canvas.toDataURL('image/png');
 
-		$('#camera').html(' <img id="photo" class="cam-preview" src="'+data+'"> ');
+		$('#camera').html(' <img id="photo" class="cam-preview" src="'+data_pic+'"> ');
 		videostream.stop();
 
 		$('.take_pic').toggle();
@@ -113,10 +120,26 @@ function takepicture() {
 
 }
 
-function restart(){
+function restart() {
 
 	$('#camera').html('<video id="video">Video stream not available.</video>');
 	$('.chose_pic').toggle();
 	getMedia();
 
+}
+
+function usepicture() {
+	$('.chose_pic').html('<p>請稍候....</p>');
+
+	$.ajax({
+		type: 'POST',
+		url: '/upload',
+        dataType:'json',
+        contentType:'application/json',
+		data: JSON.stringify({'data': data_pic}),
+        success: function(msg){
+			$('.chose_pic').html('<p>傳送成功。</p>');
+        }
+	});
+	
 }
