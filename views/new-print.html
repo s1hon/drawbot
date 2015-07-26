@@ -52,7 +52,11 @@
 		}
 
 		if (data.server){
-			console.log(data.server);
+			$('.chose_pic').html('<p>'+data.server+'</p>');
+		}
+
+		if (data.ERR){
+			$('.chose_pic').html('<p>'+data.ERR+'</p>');
 		}
 	});
 </script>
