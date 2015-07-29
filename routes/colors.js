@@ -3,7 +3,7 @@ var dateFormat = require('dateformat');
 var now = new Date();
 
 function nt(){
-	var t = clc.cyan(dateFormat(now, "[HH:MM:ss]"));
+	var t = clc.blueBright(dateFormat(now, "[HH:MM:ss]"));
 	return t;
 }
 
@@ -20,6 +20,6 @@ exports.warn = function(msg){
 };
 
 exports.info = function(msg){
-	console.log(nt(),clc.blueBright('[INFO]',msg));
+	console.log(nt(),clc.cyan('[INFO]',msg));
 };
 
