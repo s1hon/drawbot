@@ -63,15 +63,23 @@ module.exports = function(app,io,cli){
 			if (err) {
 				return cli.err(err);
 			} else {
-				fs.writeFile('user-pic/test.png', data, function(err) {
-					if(err){
-						cli.err(err);
-					}else{
-						cli.info('Save a picutre already!');
-					}
-				});
+				PictureNowId(data);
 			}
 		});
+	}
+
+	function PictureNowId(data){
+
+		fs.readdir('user-pic', function(err, items) {
+			fs.writeFile('user-pic/'+(items.length+1)+'.png', data, function(err) {
+				if(err){
+					cli.err(err);
+				}else{
+					cli.info('Save a picutre already!');
+				}
+			});
+		});
+
 	}
 
 };

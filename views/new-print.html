@@ -57,8 +57,9 @@
 			startup();
 		}
 
-		if (data.server){
+		if (data.server == '傳送成功'){
 			$('.cam-control').html('<p>'+data.server+'</p>');
+			setTimeout(function(){window.location.href = "/";}, 1000);
 		}
 
 		if (data.ERR){
