@@ -1,7 +1,14 @@
 module.exports = function(app,io,cli){
 
 	var fs = require('fs');
-	
+		                                                             
+	// `7MM"""Mq.   .g8""8q. `7MMF'   `7MF'MMP""MM""YMM `7MM"""YMM  
+	//   MM   `MM..dP'    `YM. MM       M  P'   MM   `7   MM    `7  
+	//   MM   ,M9 dM'      `MM MM       M       MM        MM   d    
+	//   MMmmdM9  MM        MM MM       M       MM        MMmmMM    
+	//   MM  YM.  MM.      ,MP MM       M       MM        MM   Y  , 
+	//   MM   `Mb.`Mb.    ,dP' YM.     ,M       MM        MM     ,M 
+	// .JMML. .JMM. `"bmmd"'    `bmmmmd"'     .JMML.    .JMMmmmmMMM 
 
 	/* GET home page. */
 	app.get('/', function(req, res, next) {
@@ -27,6 +34,14 @@ module.exports = function(app,io,cli){
 		}
 
 	});
+
+	// `7MM"""YMM `7MMF'   `7MF'`7MN.   `7MF' .g8"""bgd MMP""MM""YMM `7MMF' .g8""8q. `7MN.   `7MF'
+	//   MM    `7   MM       M    MMN.    M .dP'     `M P'   MM   `7   MM .dP'    `YM. MMN.    M  
+	//   MM   d     MM       M    M YMb   M dM'       `      MM        MM dM'      `MM M YMb   M  
+	//   MM""MM     MM       M    M  `MN. M MM               MM        MM MM        MM M  `MN. M  
+	//   MM   Y     MM       M    M   `MM.M MM.              MM        MM MM.      ,MP M   `MM.M  
+	//   MM         YM.     ,M    M     YMM `Mb.     ,'      MM        MM `Mb.    ,dP' M     YMM  
+	// .JMML.        `bmmmmd"'  .JML.    YM   `"bmmmd'     .JMML.    .JMML. `"bmmd"' .JML.    YM  
 
 	// 將canvas的資訊轉換成Buffer
 	function parseDataURL(body) {
