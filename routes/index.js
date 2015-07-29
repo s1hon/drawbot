@@ -1,6 +1,7 @@
 module.exports = function(app,io){
 
 	var fs = require('fs');
+	var cli = require('./colors.js');
 
 	/* GET home page. */
 	app.get('/', function(req, res, next) {
