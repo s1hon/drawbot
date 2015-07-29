@@ -66,6 +66,7 @@ function getMedia() {
 		},
 		function(err) {
 			console.log("An error occured! " + err);
+			$('.cam-control').html('<p>[ERR]</p><p>無法啟動攝影機</p>');
 		}
 	);
 

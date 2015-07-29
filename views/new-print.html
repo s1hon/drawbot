@@ -43,8 +43,14 @@
 
 <script>
 	var socket = io('http://localhost:3000');
+
+    socket.on('connect_error', function() {
+		$('.cam-control').html('<p>[ERR]</p><p>與伺服器失去連線</p>');
+	});
+
 	socket.emit('new-print', { camera: 'open' });
 	socket.on('server', function (data){
+
 		if (data.camera == 'READY'){
 			console.log('[CAMERA]',data.camera);
 			$('#camera').html('<video id="video">Video stream not available.</video>');
@@ -52,12 +58,13 @@
 		}
 
 		if (data.server){
-			$('.chose_pic').html('<p>'+data.server+'</p>');
+			$('.cam-control').html('<p>'+data.server+'</p>');
 		}
 
 		if (data.ERR){
-			$('.chose_pic').html('<p>'+data.ERR+'</p>');
+			$('.cam-control').html('<p>'+data.ERR+'</p>');
 		}
+
 	});
 </script>
 {% endblock %}
