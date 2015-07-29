@@ -1,7 +1,7 @@
 module.exports = function(app,io,cli){
 
 	var fs = require('fs');
-	var mkdirp = require("mkdirp")
+	var mkdirp = require("mkdirp");
 		                                                             
 	// `7MM"""Mq.   .g8""8q. `7MMF'   `7MF'MMP""MM""YMM `7MM"""YMM  
 	//   MM   `MM..dP'    `YM. MM       M  P'   MM   `7   MM    `7  
@@ -63,7 +63,7 @@ module.exports = function(app,io,cli){
 			if (err) {
 				return cli.err(err);
 			} else {
-				fs.writeFile('user-pic/test2.png', data, function(err) {
+				fs.writeFile('user-pic/test.png', data, function(err) {
 					if(err){
 						cli.err(err);
 					}else{
