@@ -1,4 +1,4 @@
-module.exports = function(io) {
+module.exports = function(io,cli) {
 
 	// io.on('connection', function (socket) {
 	//   socket.emit('news', { hello: 'world' });

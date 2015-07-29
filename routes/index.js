@@ -1,7 +1,7 @@
-module.exports = function(app,io){
+module.exports = function(app,io,cli){
 
 	var fs = require('fs');
-	var cli = require('./colors.js');
+	
 
 	/* GET home page. */
 	app.get('/', function(req, res, next) {
@@ -42,17 +42,13 @@ module.exports = function(app,io){
 
 	// 將轉好的圖片存至硬碟中
 	function savePicture(data) {
-		console.log(data);
+		// console.log(data);
 		fs.writeFile('user-pic/test.png', data, function(err) {
 			if(err){
 				console.log(err);
 			}else{
 				console.log('[SERVER] Save picutre already!');
-				// console.time('100-elements');
-				// for (var i = 0; i < 1000; i++) {
-				//   console.log(i);
-				// }
-				// console.timeEnd('100-elements');
+				cli.info('Text in');
 			}
 		});
 

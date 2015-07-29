@@ -14,7 +14,7 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
-
+var cli = require('./routes/colors');
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
@@ -24,8 +24,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
 //  / , _/ /_/ / /_/ / / / / _/_\ \  
 // /_/|_|\____/\____/ /_/ /___/___/  
 
-var routes = require('./routes/index')(app,io);
-var io_listen = require('./routes/io_listen')(io);
+var routes = require('./routes/index')(app,io,cli);
+var io_listen = require('./routes/io_listen')(io,cli);
 
 // view engine setup
 app.engine('html', swig.renderFile);

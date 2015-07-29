@@ -1,17 +1,13 @@
 var clc = require('cli-color');
 
-module.exports = {
+exports.err = function(msg){
+	console.log(clc.red.bold('[ERR]',msg));
+};
 
-	err: function (msg) {
-		console.log(clc.red.bold(msg));
-	},
+exports.warn = function(msg){
+	console.log(clc.yellow.bold('[WARN]',msg));
+};
 
-	warn: function (msg) {
-		console.log(clc.yellow.bold(msg));
-	},
-
-	info: function (msg) {
-		console.log(clc.blueBright(msg));	
-	}
-
+exports.info = function(msg){
+	console.log(clc.blueBright('[INFO]',msg));
 };
