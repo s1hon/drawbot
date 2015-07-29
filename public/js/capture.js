@@ -1,3 +1,4 @@
+var socket = io('http://localhost:3000');
 var width = 320;
 var height = 0;
 
@@ -66,6 +67,7 @@ function getMedia() {
 		},
 		function(err) {
 			console.log("An error occured! " + err);
+			socket.emit('new-print', { ERR: "Fail to open camera" });
 			$('.cam-control').html('<p>[ERR]</p><p>無法啟動攝影機</p>');
 		}
 	);
@@ -137,10 +139,7 @@ function usepicture() {
 		url: '/upload',
         dataType:'json',
         contentType:'application/json',
-		data: JSON.stringify({'data': data_pic}),
-        success: function(msg){
-			$('.chose_pic').html('<p>傳送成功。</p>');
-        }
+		data: JSON.stringify({'data': data_pic})
 	});
 	
 }

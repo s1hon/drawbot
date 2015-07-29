@@ -18,12 +18,12 @@ module.exports = function(app,io,cli){
 		var upload = parseDataURL(req.body.data);
 
 		if (upload){
-			io.emit('server', {server: '傳送成功！'});
-			console.log('[SERVER] Get a picture!');
+			io.emit('server', { server: '傳送成功' });
+			cli.info('Get a picture');
 			savePicture(upload.data);
 		}else{
 			io.emit('server', {ERR: '[ERR] Fail to get picture!'});
-			console.log('[ERR] Server can not get picutre');
+			cli.err('Server can not get picutre');
 		}
 
 	});
@@ -45,10 +45,9 @@ module.exports = function(app,io,cli){
 		// console.log(data);
 		fs.writeFile('user-pic/test.png', data, function(err) {
 			if(err){
-				console.log(err);
+				cli.err(err);
 			}else{
-				console.log('[SERVER] Save picutre already!');
-				cli.info('Text in');
+				cli.info('Save a picutre already!');
 			}
 		});
 

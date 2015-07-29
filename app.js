@@ -52,7 +52,7 @@ swig.setDefaults({ cache: false });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev')); // Open request log or not
+// app.use(logger('dev')); // Open request log or not
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

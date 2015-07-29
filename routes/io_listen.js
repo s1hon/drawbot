@@ -11,10 +11,16 @@ module.exports = function(io,cli) {
 
 		socket.on('new-print', function (data) {
 			if(data.camera=='open'){
-				console.log('{ request: "Camera open request." }');
-				setTimeout(function(){camera_open(socket);}, 2000);
+				cli.log('{ request: "Camera open request." }');
+				setTimeout(function(){camera_open(socket);}, 500);
 			}
+
+			if(data.ERR){
+				cli.err(data.ERR);
+			}
+
 		});
+
 
 	});
 
