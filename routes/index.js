@@ -17,8 +17,8 @@ module.exports = function(app,io,cli){
 	});
 
 	/* GET home page. */
-	app.get('/new-print', function(req, res, next) {
-		res.render('new-print', { title: '新增列印 | Drawbot' });
+	app.get('/add', function(req, res, next) {
+		res.render('add', { title: '新增列印 | Drawbot' });
 	});
 
 	// 接收canvas的資料，準備將資料轉成圖片再儲存
