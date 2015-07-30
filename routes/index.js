@@ -31,7 +31,7 @@ module.exports = function(app,io,cli){
 			savePicture(upload.data);
 		}else{
 			io.emit('server', {ERR: '[ERR] Fail to get picture!'});
-			cli.err('Server can not get picutre');
+			cli.err('Server can not get the picutre');
 		}
 
 	});
@@ -75,7 +75,7 @@ module.exports = function(app,io,cli){
 				if(err){
 					cli.err(err);
 				}else{
-					cli.info('Save a picutre already!');
+					cli.info('Save picutre : '+(items.length+1)+'.png');
 				}
 			});
 		});
