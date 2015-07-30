@@ -21,6 +21,10 @@ module.exports = function(app,io,cli){
 		res.render('add', { title: '新增列印 | Drawbot' });
 	});
 
+	app.get('/list', function(req, res, next) {
+		res.render('list', { title: '列印列表 | Drawbot'});
+	});
+
 	// 接收canvas的資料，準備將資料轉成圖片再儲存
 	app.post('/upload', function (req, res) {
 		var upload = parseDataURL(req.body.data);
@@ -70,8 +74,8 @@ module.exports = function(app,io,cli){
 
 	function PictureNowId(data){
 
-		fs.readdir('user-pic', function(err, items) {
-			fs.writeFile('user-pic/'+(items.length+1)+'.png', data, function(err) {
+		fs.readdir('public/user-pic', function(err, items) {
+			fs.writeFile('public/user-pic/'+(items.length+1)+'.png', data, function(err) {
 				if(err){
 					cli.err(err);
 				}else{
