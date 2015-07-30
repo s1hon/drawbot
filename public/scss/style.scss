@@ -7,6 +7,7 @@ $menu-color-dark: #1E4C44;
 
 html {
 	height: 100vh;
+	background: #334D5B;
 }
 
 .ripple { /*stylings for the circular overlay*/
@@ -87,20 +88,36 @@ html {
 
 	.lr{
 		height: 100vh;
+	}
+
+	.dark-background{
 		background: #334D5B;
 	}
 
-	.row{
+	.logo{
+	    position: relative;
+		margin: 0px auto;
+	    top:32%;
+		background-image: url(../img/logo.png);
+		height: 260px;
+		width: 740px;
+	}
 
-		.logo{
-		    position: relative;
-			margin: 0px auto;
-		    top:32%;
-			background-image: url(../img/logo.png);
-			height: 260px;
-			width: 740px;
+	.title{
+
+		p{
+			height: 100px;
+			width: 300px;
+			position: relative;
+			left: 100px;
+			top: 20px;
+		    font-size: 50px;
+		    color: $font-color;
+
+		    #startbutton{
+				width: 300px;
+			}
 		}
-
 	}
 	
 	.menu-btm{
@@ -182,6 +199,28 @@ html {
 
 		}
 
+
+	}
+	
+
+	// 列表
+	.gallery{
+		width: 90%;
+		margin:0px auto;
+	}
+
+	.items{
+		float: left;
+		margin: 20px 20px 20px 20px;
+
+		.status{
+			background: white;
+
+			p{
+				text-align: center;
+				font-size: 25px;
+			}
+		}
 
 	}
 

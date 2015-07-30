@@ -22,7 +22,13 @@ module.exports = function(app,io,cli){
 	});
 
 	app.get('/list', function(req, res, next) {
-		res.render('list', { title: '列印列表 | Drawbot'});
+		fs.readdir('user-pic', function(err, items) {
+			if(err){
+				cli.err(err);
+			}else{
+				res.render('list', { title: '列印列表 | Drawbot', items: items});
+			}
+		});
 	});
 
 	// 接收canvas的資料，準備將資料轉成圖片再儲存

@@ -4,7 +4,7 @@
 
 {% block content %}
 		<div id="index-logo" class="row">
-			<div class="col-md-12 lr">
+			<div class="col-md-12 lr dark-background">
 				<div class="cam-posi">
 
 					<div id="camera" class="cam-preview col-md-offset-1">
@@ -59,7 +59,7 @@
 
 		if (data.server == '傳送成功'){
 			$('.cam-control').html('<p>'+data.server+'</p>');
-			setTimeout(function(){window.location.href = "/";}, 1000);
+			setTimeout(function(){window.location.href = "/";}, 3000);
 		}
 
 		if (data.ERR){

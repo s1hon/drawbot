@@ -3,14 +3,40 @@
 {% block title %} {{ title|title }} {% endblock %}
 
 {% block content %}
-		<div id="index-logo" class="row">
-			<div class="col-md-12 lr">
-			
-			</div>
+	<div class="row">
+		<div class="col-md-12 dark-background title">
+				<p>列 表</p>
 		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 lr dark-background">
+
+			<div class="gallery">
+				{% for item in items%}
+					<div id="{{ item }}" class="items">
+						<img id="photo" src="pic/{{ item }}">
+						<div class="status">
+							<p>排隊中</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
 {% endblock %}
 
 {% block end_script %}
 <script>
+	var socket = io('http://localhost:3000');
+
+	socket.on('server', function (data){
+
+		if(data.server == '傳送成功'){
+			location.reload();
+		}
+		
+	});
 </script>
 {% endblock %}
