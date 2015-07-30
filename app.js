@@ -55,6 +55,7 @@ swig.setDefaults({ cache: false });
 // app.use(logger('dev')); // Open request log or not
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/pic',express.static(path.join(__dirname, 'user-pic')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

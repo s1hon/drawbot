@@ -74,8 +74,8 @@ module.exports = function(app,io,cli){
 
 	function PictureNowId(data){
 
-		fs.readdir('public/user-pic', function(err, items) {
-			fs.writeFile('public/user-pic/'+(items.length+1)+'.png', data, function(err) {
+		fs.readdir('user-pic', function(err, items) {
+			fs.writeFile('user-pic/'+(items.length+1)+'.png', data, function(err) {
 				if(err){
 					cli.err(err);
 				}else{
