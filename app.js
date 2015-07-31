@@ -31,7 +31,7 @@ var db = new sqlite3.Database('./print_list.db');
 db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prints'",
   function(err, rows) {
     if(err !== null) {
-      console.log(err);
+      cli.err(err);
     }
     else if(rows === undefined) {
       db.run("CREATE TABLE 'prints' " +
@@ -41,15 +41,15 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prints'",
               "file STRING NOT NULL, " +
               "status STRING NOT NULL)", function(err) {
         if(err !== null) {
-          console.log(err);
+          cli.err(err);
         }
         else {
-          console.log("SQL Table 'prints' initialized.");
+          cli.log("SQL Table 'prints' initialized.");
         }
       });
     }
     else {
-      console.log("SQL Table 'prints' already initialized.");
+      cli.log("SQL Table 'prints' already initialized.");
     }
 });
 
