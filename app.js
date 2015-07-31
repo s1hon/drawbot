@@ -16,6 +16,44 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 var cli = require('./routes/colors');
 
+// `7MM"""Yb.      db   MMP""MM""YMM   db      `7MM"""Yp,      db       .M"""bgd `7MM"""YMM  
+//   MM    `Yb.   ;MM:  P'   MM   `7  ;MM:       MM    Yb     ;MM:     ,MI    "Y   MM    `7  
+//   MM     `Mb  ,V^MM.      MM      ,V^MM.      MM    dP    ,V^MM.    `MMb.       MM   d    
+//   MM      MM ,M  `MM      MM     ,M  `MM      MM"""bg.   ,M  `MM      `YMMNq.   MMmmMM    
+//   MM     ,MP AbmmmqMA     MM     AbmmmqMA     MM    `Y   AbmmmqMA   .     `MM   MM   Y  , 
+//   MM    ,dP'A'     VML    MM    A'     VML    MM    ,9  A'     VML  Mb     dM   MM     ,M 
+// .JMMmmmdP'.AMA.   .AMMA..JMML..AMA.   .AMMA..JMMmmmd9 .AMA.   .AMMA.P"Ybmmd"  .JMMmmmmMMM 
+
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./print_list.db');
+
+// Database initialization
+db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prints'",
+  function(err, rows) {
+    if(err !== null) {
+      console.log(err);
+    }
+    else if(rows === undefined) {
+      db.run("CREATE TABLE 'prints' " +
+              "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+              "create_time DATETIME DEFAULT (datetime('now','localtime')), " +
+              "print_id CHAR(6) UNIQUE NOT NULL, " +
+              "file STRING NOT NULL, " +
+              "status STRING NOT NULL)", function(err) {
+        if(err !== null) {
+          console.log(err);
+        }
+        else {
+          console.log("SQL Table 'prints' initialized.");
+        }
+      });
+    }
+    else {
+      console.log("SQL Table 'prints' already initialized.");
+    }
+});
+
+// BodyParser limit setting
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
 
