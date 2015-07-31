@@ -1,8 +1,8 @@
 var clc = require('cli-color');
 var dateFormat = require('dateformat');
-var now = new Date();
 
 function nt(){
+	var now = new Date();
 	var t = clc.blueBright(dateFormat(now, "[HH:MM:ss]"));
 	return t;
 }
