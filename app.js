@@ -62,8 +62,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
 //  / , _/ /_/ / /_/ / / / / _/_\ \  
 // /_/|_|\____/\____/ /_/ /___/___/  
 
-var routes = require('./routes/index')(app,io,cli);
-var io_listen = require('./routes/io_listen')(io,cli);
+var routes = require('./routes/index')(app,io,cli,db);
+var io_listen = require('./routes/io_listen')(io,cli,db);
 
 // view engine setup
 app.engine('html', swig.renderFile);
