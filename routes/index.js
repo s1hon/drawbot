@@ -1,4 +1,4 @@
-module.exports = function(app,io,cli){
+module.exports = function(app,io,cli,db){
 
 	var fs = require('fs');
 	var mkdirp = require("mkdirp");
