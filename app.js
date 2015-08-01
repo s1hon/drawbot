@@ -14,7 +14,7 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
-var cli = require('./routes/colors');
+var cli = require('./script/colors');
 
 // `7MM"""Yb.      db   MMP""MM""YMM   db      `7MM"""Yp,      db       .M"""bgd `7MM"""YMM  
 //   MM    `Yb.   ;MM:  P'   MM   `7  ;MM:       MM    Yb     ;MM:     ,MI    "Y   MM    `7  
