@@ -39,7 +39,7 @@ module.exports = function(app,io,cli,db){
 
 			// insert.finalize();
 
-			db.run("DELETE FROM prints WHERE ID=3",function(err){
+			db.run("DELETE FROM prints WHERE ID>0",function(err){
 				if(err)
 					cli.err(err);
 			});
@@ -100,11 +100,11 @@ module.exports = function(app,io,cli,db){
 				insert.finalize();
 
 				//Get db counts
-				db.get("SELECT COUNT(*) FROM prints",function(err, rows){
+				db.get("SELECT id FROM prints order by id desc",function(err, rows){
 					if(err){
 						cli.err(err);
 					}else{
-						count =	JSON.stringify(rows['COUNT(*)'], null, 2);
+						count =	JSON.stringify(rows['id'], null, 2);
 						count = Number(count);
 
 						// save file with count
