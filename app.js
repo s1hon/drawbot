@@ -34,11 +34,9 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prints'",
       cli.err(err);
     }
     else if(rows === undefined) {
-      db.run("CREATE TABLE 'prints' " +
-              "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-              "create_time DATETIME DEFAULT (datetime('now','localtime')), " +
-              "print_id CHAR(6) UNIQUE NOT NULL, " +
-              "file STRING NOT NULL, " +
+      db.run("CREATE TABLE 'prints' \n" +
+              "(id INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+              "create_time DATETIME DEFAULT (datetime('now','localtime')), \n" +
               "status STRING NOT NULL)", function(err) {
         if(err !== null) {
           cli.err(err);
@@ -49,7 +47,7 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prints'",
       });
     }
     else {
-      cli.log("SQL Table 'prints' already initialized.");
+      cli.log("SQL Table "+JSON.stringify(rows.name, null, 2)+" already initialized.");
     }
 });
 

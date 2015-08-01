@@ -22,13 +22,34 @@ module.exports = function(app,io,cli,db){
 	});
 
 	app.get('/list', function(req, res, next) {
-		fs.readdir('user-pic', function(err, items) {
-			if(err){
-				cli.err(err);
-			}else{
-				res.render('list', { title: '列印列表 | Drawbot', items: items});
-			}
+		db.serialize(function() {
+			db.all('SELECT * FROM prints WHERE id', function(err, rows){
+				res.render('list', { title: '列印列表 | Drawbot', items: rows});
+			});
 		});
+	});
+
+	app.get('/test', function(req, res, next){
+		db.serialize(function(){
+			// var insert = db.prepare("INSERT INTO prints (print_id, status) VALUES (?,?)");
+
+			// for (var i = 0; i < 1000; i++){
+			// 	insert.run(i,'standby');	
+			// }
+
+			// insert.finalize();
+
+			db.run("DELETE FROM prints WHERE ID=3",function(err){
+				if(err)
+					cli.err(err);
+			});
+
+			// db.get("SELECT COUNT(*) FROM prints",function(err, rows){
+			// 	cli.info(JSON.stringify(rows['COUNT(*)'], null, 2));	
+			// });
+			
+		});
+		res.send('OK');
 	});
 
 	// 接收canvas的資料，準備將資料轉成圖片再儲存
@@ -67,29 +88,39 @@ module.exports = function(app,io,cli,db){
 	}
 
 	// 將轉好的圖片存至硬碟中
-	function savePicture(data) {
+	function savePicture(data,id) {
 		// console.log(data);
 		mkdirp('user-pic', function (err) {
 			if (err) {
 				return cli.err(err);
 			} else {
-				PictureNowId(data);
+				//Add a new record
+				var insert = db.prepare("INSERT INTO prints (status) VALUES (?)");
+				insert.run('standby');
+				insert.finalize();
+
+				//Get db counts
+				db.get("SELECT COUNT(*) FROM prints",function(err, rows){
+					if(err){
+						cli.err(err);
+					}else{
+						count =	JSON.stringify(rows['COUNT(*)'], null, 2);
+						count = Number(count);
+
+						// save file with count
+						fs.writeFile('user-pic/'+count+'.png', data, function(err) {
+							if(err){
+								cli.err(err);
+							}else{
+								cli.info('Save picutre : '+count+'.png');
+							}
+						});
+					}	
+				});
+
+
 			}
 		});
-	}
-
-	function PictureNowId(data){
-
-		fs.readdir('user-pic', function(err, items) {
-			fs.writeFile('user-pic/'+(items.length+1)+'.png', data, function(err) {
-				if(err){
-					cli.err(err);
-				}else{
-					cli.info('Save picutre : '+(items.length+1)+'.png');
-				}
-			});
-		});
-
 	}
 
 };

@@ -14,10 +14,12 @@
 
 			<div class="gallery">
 				{% for item in items%}
-					<div id="{{ item }}" class="items">
-						<img id="photo" src="pic/{{ item }}">
+					<div id="{{ item.id }}" class="items">
+						<img id="photo" src="pic/{{ item.id }}.png">
 						<div class="status">
-							<p>排隊中</p>
+							<p>ID:{{ item.id }}</p>
+							<p>TIME:{{ item.create_time }}</p>
+							<p>STATUS:{{ item.status }}</p>
 						</div>
 					</div>
 				{% endfor %}
