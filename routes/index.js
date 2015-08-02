@@ -42,20 +42,6 @@ module.exports = function(app, io, cli, db){
 		
 	});
 
-	app.get('/admin', function(req, res, next){
-
-		printJSON(req.session);
-
-		if(req.session.logined == false) {
-			res.send("OK");
-		}else{
-			req.session.logined = false;
-			req.session = null ;
-			res.send("NO");
-		}
-
-	});
-
 	app.get('/list', function(req, res, next) {
 
 		db.serialize(function() {
@@ -74,9 +60,41 @@ module.exports = function(app, io, cli, db){
 				}
 			});
 		});
-		
+
+	});
+
+	// 管理介面
+	app.get('/admin', function(req, res, next){
+
+		// printJSON(req.session);
+
+		if(req.session.logined == false) {
+			res.redirect('/login');
+		}else{
+			req.session.logined = false;
+			req.session = null ;
+			res.send("NO");
+		}
+
+	});
+
+	app.get('/login', function(req, res, next){
+		db.serialize(function() {
+			db.all('SELECT * FROM prints WHERE status="printing"', function(err, rows){
+				if(err){
+					cli.err(err);
+				}else{
+					res.render('login', { title: '登入 | Drawbot', pt: rows});
+				}
+			});
+		});
+	});
+
+	app.post('/login', function(req, res, next){
+
 	});
 	
+	// 測試用
 	app.get('/test', function(req, res, next){
 		db.serialize(function(){
 			// var insert = db.prepare("INSERT INTO prints (print_id, status) VALUES (?,?)");

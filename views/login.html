@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{ title|title }} {% endblock %}
+
+{% block content %}
+
+	<div class="row">
+		<div class="col-md-12 dark-background title">
+				<p>管 理</p>
+		</div>
+	</div>
+	<div class="row dark-background">
+		<div class="col-md-12  in_form">
+				<div class="input-group input-group-lg">
+				  <span class="input-group-addon" id="sizing-addon1">請輸入管理密碼</span>
+				  <input type="text" class="form-control" placeholder="Password" aria-describedby="sizing-addon1">
+				</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block end_script %}
+{% endblock %}
