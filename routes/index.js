@@ -1,8 +1,8 @@
-module.exports = function(app,io,cli,db){
+module.exports = function(app, io, cli, db){
 
 	var fs = require('fs');
 	var mkdirp = require("mkdirp");
-		                                                             
+
 	// `7MM"""Mq.   .g8""8q. `7MMF'   `7MF'MMP""MM""YMM `7MM"""YMM  
 	//   MM   `MM..dP'    `YM. MM       M  P'   MM   `7   MM    `7  
 	//   MM   ,M9 dM'      `MM MM       M       MM        MM   d    
@@ -62,7 +62,7 @@ module.exports = function(app,io,cli,db){
 			});
 		});
 	});
-
+	
 	app.get('/test', function(req, res, next){
 		db.serialize(function(){
 			// var insert = db.prepare("INSERT INTO prints (print_id, status) VALUES (?,?)");
@@ -108,12 +108,6 @@ module.exports = function(app,io,cli,db){
 	//   MM   Y     MM       M    M   `MM.M MM.              MM        MM MM.      ,MP M   `MM.M  
 	//   MM         YM.     ,M    M     YMM `Mb.     ,'      MM        MM `Mb.    ,dP' M     YMM  
 	// .JMML.        `bmmmmd"'  .JML.    YM   `"bmmmd'     .JMML.    .JMML. `"bmmd"' .JML.    YM  
-
-	// 讀取目前有哪些列印中
-	function getPrinting(){
-
-	}
-
 
 	// 將canvas的資訊轉換成Buffer
 	function parseDataURL(body) {
