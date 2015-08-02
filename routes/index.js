@@ -42,8 +42,21 @@ module.exports = function(app, io, cli, db){
 		
 	});
 
+	app.get('/admin', function(req, res, next){
+
+		printJSON(req.session);
+
+		if(req.session.logined == false) {
+			res.send("OK");
+		}else{
+			req.session.logined = false;
+			req.session = null ;
+			res.send("NO");
+		}
+
+	});
+
 	app.get('/list', function(req, res, next) {
-		pt=getPrinting();
 
 		db.serialize(function() {
 			db.all('SELECT * FROM prints WHERE id', function(err, rows){
@@ -61,6 +74,7 @@ module.exports = function(app, io, cli, db){
 				}
 			});
 		});
+		
 	});
 	
 	app.get('/test', function(req, res, next){
@@ -108,6 +122,10 @@ module.exports = function(app, io, cli, db){
 	//   MM   Y     MM       M    M   `MM.M MM.              MM        MM MM.      ,MP M   `MM.M  
 	//   MM         YM.     ,M    M     YMM `Mb.     ,'      MM        MM `Mb.    ,dP' M     YMM  
 	// .JMML.        `bmmmmd"'  .JML.    YM   `"bmmmd'     .JMML.    .JMML. `"bmmd"' .JML.    YM  
+
+	function printJSON(data){
+		cli.log(JSON.stringify(data, null, 2));
+	}
 
 	// 將canvas的資訊轉換成Buffer
 	function parseDataURL(body) {

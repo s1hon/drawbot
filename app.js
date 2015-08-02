@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cookieSession = require('cookie-session');
 var swig = require('swig');
 
 // Set app & server
@@ -52,8 +53,17 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prints'",
 });
 
 // BodyParser limit setting
+app.use(cookieSession({ name: 'session', keys: ['AAA', 'BBB'] }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
+
+// middleware
+app.use(function (req, res, next) {
+  if( req.session.logined == null ){
+    req.session.logined = false;
+  }
+  next();
+});
 
 //    ___  ____  __  ________________
 //   / _ \/ __ \/ / / /_  __/ __/ __/
