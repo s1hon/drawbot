@@ -14,12 +14,26 @@
 
 			<div class="gallery">
 				{% for item in items%}
-					<div id="{{ item.id }}" class="items">
-						<img id="photo" src="pic/{{ item.id }}.png">
+					<div id="{{ item.id }}" class="items 
+						{% if item.status == 'standby' %}
+							label-default
+						{% elseif item.status == 'printing' %}
+							label-danger
+						{% elseif item.status == 'done' %}
+							label-success
+						{% endif %}
+					">
+						<img id="img-{{ item.id }}" src="pic/{{ item.id }}.png">
 						<div class="status">
-							<p>ID:{{ item.id }}</p>
-							<p>TIME:{{ item.create_time }}</p>
-							<p>STATUS:{{ item.status }}</p>
+							<p>
+							{% if item.status == 'standby' %}
+								<p >尚未列印</p>
+							{% elseif item.status == 'printing' %}
+								<p >列印中</p>
+							{% elseif item.status == 'done' %}
+								<p >列印完畢</p>
+							{% endif %}
+							</p>
 						</div>
 					</div>
 				{% endfor %}

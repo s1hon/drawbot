@@ -7,11 +7,17 @@
 			</div>
 		</a>
 	</div>
+
+	
+	{% for pt in pt%}
 	<div class="row">
 		<div class="print-status">
-			<p>812AA 列印中</p>
+			<img id="img-{{ pt.id }}" src="pic/{{ pt.id }}.png">
+			<p>列印中</p>
 		</div>
 	</div>
+	{% endfor %}
+
 	<div class="row">
 		<div id="btm-new" class="button-demo side-bar-icon">
 			<div class="icon">

@@ -13,18 +13,52 @@ module.exports = function(app,io,cli,db){
 
 	/* GET home page. */
 	app.get('/', function(req, res, next) {
-		res.render('index', { title: 'Drawbot' });
+
+		db.serialize(function() {
+			db.all('SELECT * FROM prints WHERE status="printing"', function(err, rows){
+				if(err){
+					cli.err(err);
+				}else{
+					res.render('index', { title: 'Drawbot', pt: rows });
+				}
+			});
+		});
+
 	});
 
 	/* GET home page. */
 	app.get('/add', function(req, res, next) {
-		res.render('add', { title: '新增列印 | Drawbot' });
+
+		db.serialize(function() {
+			db.all('SELECT * FROM prints WHERE status="printing"', function(err, rows){
+				if(err){
+					cli.err(err);
+				}else{
+					res.render('add', { title: '新增列印 | Drawbot', pt: rows});
+				}
+			});
+		});
+
+		
 	});
 
 	app.get('/list', function(req, res, next) {
+		pt=getPrinting();
+
 		db.serialize(function() {
 			db.all('SELECT * FROM prints WHERE id', function(err, rows){
-				res.render('list', { title: '列印列表 | Drawbot', items: rows});
+				if(err){
+					cli.err(err);
+				}else{
+
+					db.all('SELECT * FROM prints WHERE status="printing"', function(err, rows1){
+						if(err){
+							cli.err(err);
+						}else{
+							res.render('list', { title: '列印列表 | Drawbot', items: rows, pt: rows1});
+						}
+					});
+				}
 			});
 		});
 	});
@@ -58,7 +92,7 @@ module.exports = function(app,io,cli,db){
 
 		if (upload){
 			io.emit('server', { server: '傳送成功' });
-			cli.info('Get a picture');
+			// cli.info('Get a picture');
 			savePicture(upload.data);
 		}else{
 			io.emit('server', {ERR: '[ERR] Fail to get picture!'});
@@ -74,6 +108,12 @@ module.exports = function(app,io,cli,db){
 	//   MM   Y     MM       M    M   `MM.M MM.              MM        MM MM.      ,MP M   `MM.M  
 	//   MM         YM.     ,M    M     YMM `Mb.     ,'      MM        MM `Mb.    ,dP' M     YMM  
 	// .JMML.        `bmmmmd"'  .JML.    YM   `"bmmmd'     .JMML.    .JMML. `"bmmd"' .JML.    YM  
+
+	// 讀取目前有哪些列印中
+	function getPrinting(){
+
+	}
+
 
 	// 將canvas的資訊轉換成Buffer
 	function parseDataURL(body) {
@@ -112,7 +152,7 @@ module.exports = function(app,io,cli,db){
 							if(err){
 								cli.err(err);
 							}else{
-								cli.info('Save picutre : '+count+'.png');
+								cli.info('Save a new record : '+count);
 							}
 						});
 					}	

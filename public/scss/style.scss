@@ -3,11 +3,12 @@ $font-color: #F8E71C;
 $printer-printing-color: #DF5A49;
 $menu-color-light: #49B29E;
 $menu-color-dark: #1E4C44;
+$background: #3B3C3C;
 
 
 html {
 	height: 100vh;
-	background: #334D5B;
+	background: $background;
 }
 
 .ripple { /*stylings for the circular overlay*/
@@ -91,7 +92,7 @@ html {
 	}
 
 	.dark-background{
-		background: #334D5B;
+		background: $background;
 	}
 
 	.logo{
@@ -212,16 +213,45 @@ html {
 	.items{
 		float: left;
 		margin: 20px 20px 20px 20px;
+		border-style:solid;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
 
 		.status{
-			background: white;
 
 			p{
 				text-align: center;
-				font-size: 25px;
+				font-size: 35px;
 			}
 		}
 
+	}
+
+	.label-text{	
+		font-weight: normal;
+	    font-family: arial;
+	}
+
+	.label-default{
+		background: #D8D8D8;
+		border-color: #D8D8D8;
+		color: $background;
+	}
+
+	.label-danger{
+		border-color: #FF983B;
+		background: #FF983B; 
+		color: black;
+	}
+	.label-success{
+		border-color: #74FF83;
+		background: #74FF83;
+		color: black;
+	}
+
+	.label-info{
+		color: black;
 	}
 
 }
