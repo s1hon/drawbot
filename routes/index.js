@@ -63,6 +63,12 @@ module.exports = function(app, io, cli, db){
 
 	});
 
+	// ID Controller
+	app.post('/id/:id', function(req, res, next){
+		var pid = req.params.id;
+
+	});
+
 	// 管理介面
 	app.get('/admin', function(req, res, next){
 
