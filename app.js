@@ -60,7 +60,6 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
 // middleware
 app.use(function (req, res, next) {
   if( req.session.logined == null ){
-    cli.err("RESET");
     req.session.logined = false;
   }
   next();
