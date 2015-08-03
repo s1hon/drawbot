@@ -228,6 +228,12 @@ html {
 
 	}
 
+	.sta_null{
+		text-align: center;
+		font-size: 35px;
+		color: gray;
+	}
+
 	.label-text{	
 		font-weight: normal;
 	    font-family: arial;
@@ -256,8 +262,19 @@ html {
 
 	.in_form{
 		.input-group{
-			width: 800px;
+			// width: 800px;
 			margin: 0px auto;
+		}
+
+		#login{
+			font-size: 50px;
+			width: 400px;
+			height: 100px;
+		}
+
+		#btm{
+			font-size: 50px;
+			height: 100px;	
 		}
 	}
 

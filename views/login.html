@@ -6,15 +6,20 @@
 
 	<div class="row">
 		<div class="col-md-12 dark-background title">
-				<p>管 理</p>
+				<p>請先登入</p>
 		</div>
 	</div>
 	<div class="row dark-background">
 		<div class="col-md-12  in_form">
-				<div class="input-group input-group-lg">
-				  <span class="input-group-addon" id="sizing-addon1">請輸入管理密碼</span>
-				  <input type="text" class="form-control" placeholder="Password" aria-describedby="sizing-addon1">
-				</div>
+			<div class="input-group input-group-lg">
+			  <form class="navbar-form" action="/login" method="POST">
+
+				  <input type="password" id="login" name="password" class="form-control" placeholder="請輸入管理密碼" aria-describedby="sizing-addon1">
+				  <span class="input-group-btn">
+					<input type="submit" id="btm" class="btn btn-default" value="登入">
+			      </span>
+			  </form>
+			</div>
 		</div>
 	</div>
 

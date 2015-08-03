@@ -50,11 +50,11 @@ module.exports = function(app, io, cli, db){
 					cli.err(err);
 				}else{
 
-					db.all('SELECT * FROM prints WHERE status="printing"', function(err, rows1){
+					db.all('SELECT * FROM prints WHERE status="printing"', function(err, pt){
 						if(err){
 							cli.err(err);
 						}else{
-							res.render('list', { title: '列印列表 | Drawbot', items: rows, pt: rows1});
+							res.render('list', { title: '列印列表 | Drawbot', items: rows, pt: pt});
 						}
 					});
 				}
@@ -66,14 +66,25 @@ module.exports = function(app, io, cli, db){
 	// 管理介面
 	app.get('/admin', function(req, res, next){
 
-		// printJSON(req.session);
-
 		if(req.session.logined == false) {
 			res.redirect('/login');
 		}else{
-			req.session.logined = false;
-			req.session = null ;
-			res.send("NO");
+			db.serialize(function() {
+				db.all('SELECT * FROM prints WHERE id', function(err, rows){
+					if(err){
+						cli.err(err);
+					}else{
+
+						db.all('SELECT * FROM prints WHERE status="printing"', function(err, pt){
+							if(err){
+								cli.err(err);
+							}else{
+								res.render('admin', { title: '列印列表 | Drawbot', items: rows, pt: pt});
+							}
+						});
+					}
+				});
+			});
 		}
 
 	});
@@ -92,6 +103,22 @@ module.exports = function(app, io, cli, db){
 
 	app.post('/login', function(req, res, next){
 
+
+		var passwd = req.body.password;
+
+		if (passwd == "123456" ){
+			req.session.logined = true;
+			res.redirect("/admin");
+		}else{
+			req.session.logined = false;
+			res.redirect("/login");
+		}
+
+	});
+
+	app.get('/logout', function(req, res, next){
+		req.session.logined = false;
+		res.redirect("/list");
 	});
 	
 	// 測試用
