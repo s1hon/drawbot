@@ -19,7 +19,7 @@ module.exports = function(app, io, cli, db){
 				if(err){
 					cli.err(err);
 				}else{
-					res.render('index', { title: 'Drawbot', pt: rows });
+					res.render('index', { title: 'Drawbot', print_now: rows });
 				}
 			});
 		});
@@ -34,7 +34,7 @@ module.exports = function(app, io, cli, db){
 				if(err){
 					cli.err(err);
 				}else{
-					res.render('add', { title: '新增列印 | Drawbot', pt: rows});
+					res.render('add', { title: '新增列印 | Drawbot', print_now: rows});
 				}
 			});
 		});
@@ -50,11 +50,11 @@ module.exports = function(app, io, cli, db){
 					cli.err(err);
 				}else{
 
-					db.all('SELECT * FROM prints WHERE status="printing"', function(err, pt){
+					db.all('SELECT * FROM prints WHERE status="printing"', function(err, print_now){
 						if(err){
 							cli.err(err);
 						}else{
-							res.render('list', { title: '列印列表 | Drawbot', items: rows, pt: pt});
+							res.render('list', { title: '列印列表 | Drawbot', items: rows, print_now: print_now});
 						}
 					});
 				}
@@ -81,11 +81,11 @@ module.exports = function(app, io, cli, db){
 						cli.err(err);
 					}else{
 
-						db.all('SELECT * FROM prints WHERE status="printing"', function(err, pt){
+						db.all('SELECT * FROM prints WHERE status="printing"', function(err, print_now){
 							if(err){
 								cli.err(err);
 							}else{
-								res.render('admin', { title: '列印列表 | Drawbot', items: rows, pt: pt});
+								res.render('admin', { title: '列印列表 | Drawbot', items: rows, print_now: print_now});
 							}
 						});
 					}
@@ -101,7 +101,7 @@ module.exports = function(app, io, cli, db){
 				if(err){
 					cli.err(err);
 				}else{
-					res.render('login', { title: '登入 | Drawbot', pt: rows});
+					res.render('login', { title: '登入 | Drawbot', print_now: rows});
 				}
 			});
 		});
