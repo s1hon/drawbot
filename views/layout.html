@@ -21,8 +21,10 @@
 </head>
 <body>
 	<div class="container-fluid">
-		{% block content %}
-		{% endblock %}
+		<div class="not_sidebr">
+			{% block content %}
+			{% endblock %}
+		</div>
 		<div class="menu-btm">
 		</div>
 		{% include 'side-bar.html' %}
@@ -37,7 +39,7 @@
 	{% endblock %}
 
 	<script>
-		$( ".container-fluid #index-logo" ).click(function(){
+		$( ".not_sidebr" ).click(function(){
 			if ( $("#side-bar").offset().left >= 0 ){
 				$("#side-bar").animate({left:'-400px'},"slow");
 			}

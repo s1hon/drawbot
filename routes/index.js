@@ -124,7 +124,7 @@ module.exports = function(app, io, cli, db){
 
 	app.get('/logout', function(req, res, next){
 		req.session.logined = false;
-		res.redirect("/");
+		res.redirect("/admin");
 	});
 	
 	// 測試用

@@ -11,6 +11,10 @@ html {
 	background: $background;
 }
 
+.not_sidebr{
+	height: 100vh;
+}
+
 .ripple { /*stylings for the circular overlay*/
   position: relative;
   top: 0px;
@@ -30,6 +34,10 @@ html {
 
 
 .container-fluid{
+
+	.title p {
+		float: left;
+	}
 	
 	#side-bar{
 		height: 100vh;
@@ -217,17 +225,41 @@ html {
 		-webkit-border-radius: 10px;
 		-moz-border-radius: 10px;
 		border-radius: 10px;
-
+		
+		img {
+			width: 230px;
+		}
+		
 		.status{
 
 			p{
 				text-align: center;
-				font-size: 35px;
+				font-size: 28px;
 			}
 		}
 
 	}
 
+	.pic-select{
+		// display: none;
+		.window{
+			background: white;
+			width: 1550px;
+		}
+
+		div{
+			float: left;
+		}
+
+		.select-close{
+			float: right;
+			font-size: 50px;
+
+		}
+	}
+
+
+	//相片狀態
 	.sta_null{
 		text-align: center;
 		font-size: 35px;
@@ -278,5 +310,17 @@ html {
 		}
 	}
 
+	// Adimn btm list
+	.btm-list{
+		float: left;
+		position: relative;
+		top: 30px;
+	}
+
+}
+
+
+.container-fluid{
+	background: $background;
 }
 
