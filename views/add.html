@@ -42,7 +42,7 @@
 <script src="js/capture.js"></script>
 
 <script>
-	var socket = io('http://120.117.72.156:3000');
+	var socket = io(window.location.origin);
 
     socket.on('connect_error', function() {
 		$('.cam-control').html('<p>[ERR]</p><p>與伺服器失去連線</p>');

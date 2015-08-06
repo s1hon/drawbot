@@ -50,7 +50,7 @@
 
 {% block end_script %}
 <script>
-	var socket = io('http://120.117.72.156:3000');
+	var socket = io(window.location.origin);
 
 	socket.on('server', function (data){
 
