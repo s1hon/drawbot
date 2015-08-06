@@ -86,7 +86,7 @@ module.exports = function(app, io, cli, db){
 							}
 							fs.unlink('user-pic/'+pid+'.png', function (err) {
 								if (err) throw err;
-								console.log('successfully deleted '+pid+'.png');
+								cli.info('successfully deleted '+pid+'.png');
 								io.emit('server', { server: 'reload' });
 								res.sendStatus(200);
 							});
