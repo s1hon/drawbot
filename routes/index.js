@@ -87,6 +87,7 @@ module.exports = function(app, io, cli, db){
 							fs.unlink('user-pic/'+pid+'.png', function (err) {
 								if (err) throw err;
 								console.log('successfully deleted '+pid+'.png');
+								io.emit('server', { server: 'reload' });
 								res.sendStatus(200);
 							});
 						});
@@ -112,8 +113,9 @@ module.exports = function(app, io, cli, db){
 									cli.err(err);
 								}
 								cli.info('STOP PRINTING: '+pid);
+								io.emit('server', { server: 'reload' });
+								res.sendStatus(200);
 							});
-							res.sendStatus(200);
 						}
 					}else{
 						db.run('UPDATE prints set status="printing" WHERE id="'+pid+'"',function(err){
@@ -122,6 +124,7 @@ module.exports = function(app, io, cli, db){
 								res.status(403).send('STOP FAIL');	
 							}
 							cli.info('START PRINTING: '+pid);
+							io.emit('server', { server: 'reload' });
 							res.sendStatus(200);
 						});
 					}

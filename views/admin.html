@@ -67,7 +67,7 @@
 	var select_id;
 
 	socket.on('server', function (data){
-		if(data.server == '傳送成功'){
+		if(data.server){
 			location.reload();
 		}		
 	});
@@ -126,7 +126,8 @@
 			    	location.reload();
 			    },
 			    403: function(xhr, ajaxOptions, thrownError){
-			    	alert(xhr.responseText);	
+			    	alert(xhr.responseText);
+			    	location.reload();
 			    }
 			}
 		});
