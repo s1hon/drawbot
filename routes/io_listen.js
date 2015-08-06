@@ -21,6 +21,19 @@ module.exports = function(io,cli,db) {
 
 		});
 
+		socket.on('list', function (data){
+			if(data.id){
+				// cli.info('{ req: get '+data.id+' info }');
+				db.all('SELECT * FROM prints WHERE id="'+data.id+'"', function(err, rows){
+					if(err){
+						socket.emit('list', {err: "err"});
+						cli.err(err);
+					}else{
+						socket.emit('list', rows[0]);
+					}
+				});
+			}
+		});
 
 	});
 

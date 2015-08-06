@@ -241,7 +241,8 @@ html {
 	}
 
 	.pic-select{
-		// display: none;
+		display: none;
+
 		.window{
 			background: white;
 			width: 1550px;
@@ -255,6 +256,15 @@ html {
 			float: right;
 			font-size: 50px;
 
+		}
+
+		.err{
+			color: red;
+			font-size: 80px;
+		}
+
+		.control{
+			padding-top: 20px;
 		}
 	}
 

@@ -18,10 +18,15 @@
 		<div class="col-md-11 col-md-offset-1 window">
 			<div class="select-close">X</div>
 			<div class="pic">
-				<img src="pic/1.png">
+				<img src="">
 			</div>
-			<div class="col-md-offset-1">
-				hello
+			<div>
+				<div class="col-md-offset-1 info">
+				</div>
+				<div class="col-md-offset-1 control">
+					<div id="del" class="btn btn-danger btn-lg">刪除</div>
+					<div id="print" class="btn btn-success btn-lg">列印</div>
+				</div>
 			</div>
 		</div>
 
@@ -32,18 +37,9 @@
 			<div class="gallery">
 				{% if items != null %}
 					{% for item in items%}
-						<div id="{{ item.id }}" class="items 
-							{% if item.status == 'standby' %}
-								label-default
-							{% elseif item.status == 'printing' %}
-								label-danger
-							{% elseif item.status == 'done' %}
-								label-success
-							{% endif %}
-						">
-							<img id="img-{{ item.id }}" src="pic/{{ item.id }}.png">
+						<div class="items {% if item.status == 'standby' %}label-default{% elseif item.status == 'printing' %}label-danger{% elseif item.status == 'done' %}label-success{% endif %}">
+							<img id="{{ item.id }}" src="pic/{{ item.id }}.png">
 							<div class="status">
-								<p>
 								{% if item.status == 'standby' %}
 									<p >尚未列印</p>
 								{% elseif item.status == 'printing' %}
@@ -51,7 +47,6 @@
 								{% elseif item.status == 'done' %}
 									<p >列印完畢</p>
 								{% endif %}
-								</p>
 							</div>
 						</div>
 					{% endfor %}
@@ -69,28 +64,72 @@
 {% block end_script %}
 <script>
 	var socket = io('http://localhost:3000');
+	var select_id;
 
 	socket.on('server', function (data){
-
 		if(data.server == '傳送成功'){
 			location.reload();
-		}
-		
+		}		
 	});
-</script>
 
-<script>
+	socket.on('list', function(data){
+		if(data!=null){
+			select_id=data.id;
+			$('.pic-select .pic img').attr('src','pic/'+data.id+'.png');
+			$('.pic-select .window .info').html( 'id:'+data.id+'<br> time:'+data.create_time+'<br> status:'+data.status );
+			if(data.status=="printing"){
+				$('#print').html('停止列印');
+			}else{
+				$('#print').html('列印');
+			}
+			$('.pic-select').show();
+		}else{
+			$('.pic-select .pic img').attr('src','');
+			$('.pic-select .window .info').html( '<div class="err">Err</div>' );
+			$('.pic-select').show();
+		}
+	});
 
 	$('.select-close').click(function(e){
 		$('.pic-select').hide();
 	});
 
 	$(".items").click(function(e){
-		var $clicked = $(this);
-		var $imgurl = $clicked.find("img").prop('src');
-		$('.pic-select .pic img').attr('src',$imgurl);
+		socket.emit('list', { id: e.target.id });
+	});
 
-		$('.pic-select').show();
+	$('#del').click(function(e){
+		$.ajax({
+			type: 'POST',
+			url: '/id/'+select_id,
+	        dataType:'json',
+	        contentType:'application/json',
+			data: JSON.stringify({'mode': 'delete'}),
+			statusCode: {
+			    200: function() {
+			    	location.reload();
+			    }
+			}
+		});
+
+	});
+
+	$('#print').click(function(e){
+		$.ajax({
+			type: 'POST',
+			url: '/id/'+select_id,
+	        dataType:'json',
+	        contentType:'application/json',
+			data: JSON.stringify({'mode': 'printing'}),
+			statusCode: {
+			    200: function() {
+			    	location.reload();
+			    },
+			    403: function(xhr, ajaxOptions, thrownError){
+			    	alert(xhr.responseText);	
+			    }
+			}
+		});
 	});
 
 </script>

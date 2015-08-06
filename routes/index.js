@@ -65,7 +65,71 @@ module.exports = function(app, io, cli, db){
 
 	// ID Controller
 	app.post('/id/:id', function(req, res, next){
-		var pid = req.params.id;
+
+		if(req.session.logined == true) {
+			var pid = req.params.id;
+			var mode = req.body.mode;
+
+			// `7MM"""Yb. `7MM"""YMM  `7MMF'      `7MM"""YMM MMP""MM""YMM `7MM"""YMM 
+			//   MM    `Yb. MM    `7    MM          MM    `7 P'   MM   `7   MM    `7 
+			//   MM     `Mb MM   d      MM          MM   d        MM        MM   d   
+			//   MM      MM MMmmMM      MM          MMmmMM        MM        MMmmMM   
+			//   MM     ,MP MM   Y  ,   MM      ,   MM   Y  ,     MM        MM   Y  ,
+			//   MM    ,dP' MM     ,M   MM     ,M   MM     ,M     MM        MM     ,M
+			// .JMMmmmdP' .JMMmmmmMMM .JMMmmmmMMM .JMMmmmmMMM   .JMML.    .JMMmmmmMMM
+			if(mode == 'delete'){
+				db.all('SELECT * FROM prints WHERE id="'+pid+'"', function(err, print_now){
+					if(print_now.length != 0) {
+						db.run('DELETE FROM prints WHERE id="'+pid+'"',function(err){
+							if(err){
+								cli.err(err);
+							}
+							fs.unlink('user-pic/'+pid+'.png', function (err) {
+								if (err) throw err;
+								console.log('successfully deleted '+pid+'.png');
+								res.sendStatus(200);
+							});
+						});
+					}
+				});
+
+			// `7MM"""Mq.`7MM"""Mq.  `7MMF'`7MN.   `7MF'MMP""MM""YMM `7MMF'`7MN.   `7MF' .g8"""bgd  
+			//   MM   `MM. MM   `MM.   MM    MMN.    M  P'   MM   `7   MM    MMN.    M .dP'     `M  
+			//   MM   ,M9  MM   ,M9    MM    M YMb   M       MM        MM    M YMb   M dM'       `  
+			//   MMmmdM9   MMmmdM9     MM    M  `MN. M       MM        MM    M  `MN. M MM           
+			//   MM        MM  YM.     MM    M   `MM.M       MM        MM    M   `MM.M MM.    `7MMF'
+			//   MM        MM   `Mb.   MM    M     YMM       MM        MM    M     YMM `Mb.     MM  
+			// .JMML.    .JMML. .JMM..JMML..JML.    YM     .JMML.    .JMML..JML.    YM   `"bmmmdPY  
+			}else if(mode == 'printing'){
+				db.all('SELECT * FROM prints WHERE status="printing"', function(err, print_now){
+					if(print_now.length != 0) {
+						if(print_now[0]['id'] != pid) {
+							res.status(403).send('無法同時列印兩份文件！');
+						}else{
+							// Stop Printing
+							db.run('UPDATE prints set status="standby" WHERE id="'+pid+'"',function(err){
+								if(err){
+									cli.err(err);
+								}
+								cli.info('STOP PRINTING: '+pid);
+							});
+							res.sendStatus(200);
+						}
+					}else{
+						db.run('UPDATE prints set status="printing" WHERE id="'+pid+'"',function(err){
+							if(err){
+								cli.err(err);
+								res.status(403).send('STOP FAIL');	
+							}
+							cli.info('START PRINTING: '+pid);
+							res.sendStatus(200);
+						});
+					}
+				});
+			}
+		}else{
+			res.sendStatus(403);
+		}
 
 	});
 
@@ -128,28 +192,28 @@ module.exports = function(app, io, cli, db){
 	});
 	
 	// 測試用
-	app.get('/test', function(req, res, next){
-		db.serialize(function(){
-			// var insert = db.prepare("INSERT INTO prints (print_id, status) VALUES (?,?)");
+	// app.get('/test', function(req, res, next){
+	// 	db.serialize(function(){
+	// 		// var insert = db.prepare("INSERT INTO prints (print_id, status) VALUES (?,?)");
 
-			// for (var i = 0; i < 1000; i++){
-			// 	insert.run(i,'standby');	
-			// }
+	// 		// for (var i = 0; i < 1000; i++){
+	// 		// 	insert.run(i,'standby');	
+	// 		// }
 
-			// insert.finalize();
+	// 		// insert.finalize();
 
-			db.run("DELETE FROM prints WHERE ID>0",function(err){
-				if(err)
-					cli.err(err);
-			});
+	// 		db.run("DELETE FROM prints WHERE ID>0",function(err){
+	// 			if(err)
+	// 				cli.err(err);
+	// 		});
 
-			// db.get("SELECT COUNT(*) FROM prints",function(err, rows){
-			// 	cli.info(JSON.stringify(rows['COUNT(*)'], null, 2));	
-			// });
+	// 		// db.get("SELECT COUNT(*) FROM prints",function(err, rows){
+	// 		// 	cli.info(JSON.stringify(rows['COUNT(*)'], null, 2));	
+	// 		// });
 			
-		});
-		res.send('OK');
-	});
+	// 	});
+	// 	res.send('OK');
+	// });
 
 	// 接收canvas的資料，準備將資料轉成圖片再儲存
 	app.post('/upload', function (req, res) {
