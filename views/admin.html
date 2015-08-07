@@ -3,60 +3,89 @@
 {% block title %} {{ title|title }} {% endblock %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-md-12 dark-background title">
+	<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-12 dark-background title">
 				<p>管 理</p>
 				<div class="btm-list">
-					<a href=""><div class="btn btn-default btn-lg">校正圖</div></a> | 
-					<a href=""><div class="btn btn-default btn-lg">關機</div></a>
-					<a href="/logout"><div class="btn btn-default btn-lg">登出</div></a>
-				</div>
-		</div>
-	</div>
-	
-	<div class="row pic-select">
-		<div class="col-md-11 col-md-offset-1 window">
-			<div class="select-close">X</div>
-			<div class="pic">
-				<img src="">
-			</div>
-			<div>
-				<div class="col-md-offset-1 info">
-				</div>
-				<div class="col-md-offset-1 control">
-					<div id="del" class="btn btn-danger btn-lg">刪除</div>
-					<div id="print" class="btn btn-success btn-lg">列印</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	<div class="row">
-		<div class="col-md-12 dark-background">
-			<div class="gallery">
-				{% if items != null %}
-					{% for item in items%}
-						<div class="items {% if item.status == 'standby' %}label-default{% elseif item.status == 'printing' %}label-danger{% elseif item.status == 'done' %}label-success{% endif %}">
-							<img id="{{ item.id }}" src="pic/{{ item.id }}.png">
-							<div class="status">
-								{% if item.status == 'standby' %}
-									<p >尚未列印</p>
-								{% elseif item.status == 'printing' %}
-									<p >列印中</p>
-								{% elseif item.status == 'done' %}
-									<p >列印完畢</p>
-								{% endif %}
-							</div>
-						</div>
-					{% endfor %}
-				{% else %}
-					<div class="status sta_null">
-						<p>目前沒有任何資料。</p>
+					<div class="btm">
+						<div id='correction-pic' class="btn btn-default btn-lg">校正圖</div> | 
+						<div id='shutdown' class="btn btn-default btn-lg">關機</div>
+						<a href="/logout"><div class="btn btn-default btn-lg">登出</div></a>
 					</div>
-				{% endif %}
+					<div class="post-chose">
+						<select id="choosePort" class="form-control">
+							<option val="no">Select a serial port</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="row pic-select">
+			<div class="col-md-12 window">
+				<div class="select-close">X</div>
+				<div class="pic">
+					<img src="">
+				</div>
+				<div>
+					<div class="col-md-offset-1 info">
+					</div>
+					<div class="col-md-offset-1 control">
+						<div id="del" class="btn btn-danger btn-lg">刪除</div>
+						<div id="print" class="btn btn-success btn-lg">列印</div>
+					</div>
+				</div>
 			</div>
 
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 dark-background">
+				<div class="gallery">
+					{% if items != null %}
+						{% for item in items%}
+							<div class="items {% if item.status == 'standby' %}label-default{% elseif item.status == 'printing' %}label-danger{% elseif item.status == 'done' %}label-success{% endif %}">
+								<img id="{{ item.id }}" src="pic/{{ item.id }}.png">
+								<div class="status">
+									{% if item.status == 'standby' %}
+										<p >尚未列印</p>
+									{% elseif item.status == 'printing' %}
+										<p >列印中</p>
+									{% elseif item.status == 'done' %}
+										<p >列印完畢</p>
+									{% endif %}
+								</div>
+							</div>
+						{% endfor %}
+					{% else %}
+						<div class="status sta_null">
+							<p>目前沒有任何資料。</p>
+						</div>
+					{% endif %}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4 lr table-cell">
+		<pre id="console"></pre>
+		<div style="text-align:center;">
+			<div id="wPosition" class="control_btm">
+					<div id="wX" class="w">X: 0.000</div>
+					<div id="wY" class="w">Y: 0.000</div>
+					<div id="wZ" class="w">Z: 0.000</div>
+					<button type="button" class="btn btn-default" id="sendZero">Zero Machine (G92)</button>
+					<button type="button" class="btn btn-default" id="sendReset">RESET (ctrl-x)</button>
+					<button type="button" class="btn btn-success" id="sendGrblHelp">help ($)</button>
+					<button type="button" class="btn btn-success" id="sendGrblSettings">settings ($$)</button>	
+			</div>
+		</div>
+		<div class="comn">
+			<div class="text">指令輸入區</div>
+			<textarea id="command" ></textarea>
 		</div>
 	</div>
 {% endblock %}
