@@ -155,26 +155,29 @@
 	});
 
 	$('#print').click(function(e){
-		if($('#print').html()=='列印'){
-			$.ajax({
-				type: 'POST',
-				url: '/id/'+select_id,
-		        dataType:'json',
-		        contentType:'application/json',
-				data: JSON.stringify({'mode': 'printing'}),
-				statusCode: {
-				    200: function() {
-				    	location.reload();
-				    },
-				    403: function(xhr, ajaxOptions, thrownError){
-				    	alert(xhr.responseText);
-				    	location.reload();
-				    }
-				}
-			});
-		} else if ($('#print').html()=='停止列印') {
+
+		if($('#print').html()=='停止列印'){
 			$('#clearQ').click();
+			$('#pause').click();
 		}
+
+		$.ajax({
+			type: 'POST',
+			url: '/id/'+select_id,
+	        dataType:'json',
+	        contentType:'application/json',
+			data: JSON.stringify({'mode': 'printing'}),
+			statusCode: {
+			    200: function() {
+			    	location.reload();
+			    },
+			    403: function(xhr, ajaxOptions, thrownError){
+			    	alert(xhr.responseText);
+			    	location.reload();
+			    }
+			}
+		});
+		
 	});
 
 </script>
