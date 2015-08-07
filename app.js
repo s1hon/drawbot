@@ -65,72 +65,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-                                                                                       
-                                                                                       
-//   .g8"""bgd `7MM"""Mq.  `7MM"""Yp, `7MMF' `7MMF'     A     `7MF'`7MM"""YMM  `7MM"""Yp, 
-// .dP'     `M   MM   `MM.   MM    Yb   MM     `MA     ,MA     ,V    MM    `7    MM    Yb 
-// dM'       `   MM   ,M9    MM    dP   MM      VM:   ,VVM:   ,V     MM   d      MM    dP 
-// MM            MMmmdM9     MM"""bg.   MM       MM.  M' MM.  M'     MMmmMM      MM"""bg. 
-// MM.    `7MMF' MM  YM.     MM    `Y   MM      ,`MM A'  `MM A'      MM   Y  ,   MM    `Y 
-// `Mb.     MM   MM   `Mb.   MM    ,9   MM     ,M :MM;    :MM;       MM     ,M   MM    ,9 
-//   `"bmmmdPY .JMML. .JMM..JMMmmmd9  .JMMmmmmMMM  VF      VF      .JMMmmmmMMM .JMMmmmd9  
-
-var serialport = require("serialport");
-var SerialPort = serialport.SerialPort; // localize object constructor
-var sp = [];
-var allPorts = [];
-
-
-serialport.list(function (err, ports) {
-  return 0;
-
-  // if on rPi - http://www.hobbytronics.co.uk/raspberry-pi-serial-port
-  if (fs.existsSync('/dev/ttyAMA0') && config.usettyAMA0 == 1) {
-    ports.push({comName:'/dev/ttyAMA0',manufacturer: undefined,pnpId: 'raspberryPi__GPIO'});
-    console.log('adding /dev/ttyAMA0 because it is enabled in config.js, you may need to enable it in the os - http://www.hobbytronics.co.uk/raspberry-pi-serial-port');
-  }
-
-  allPorts = ports;
-  cli.log(allPorts);
-  for (var i=0; i<ports.length; i++) {
-  !function outer(i){
-
-    sp[i] = {};
-    sp[i].port = ports[i].comName;
-    sp[i].q = [];
-    sp[i].qCurrentMax = 0;
-    sp[i].lastSerialWrite = [];
-    sp[i].lastSerialReadLine = '';
-    // 1 means clear to send, 0 means waiting for response
-    sp[i].handle = new SerialPort(ports[i].comName, {
-      parser: serialport.parsers.readline("\n"),
-      baudrate: config.serialBaudRate
-    });
-    sp[i].sockets = [];
-
-    sp[i].handle.on("open", function() {
-
-      console.log('connected to '+sp[i].port+' at '+config.serialBaudRate);
-
-      // line from serial port
-      sp[i].handle.on("data", function (data) {
-        serialData(data, i);
-      });
-
-      // loop for status ?
-      setInterval(function() {
-        // console.log('writing ? to serial');
-        sp[i].handle.write('?');
-      }, 1000);
-
-    });
-
-  }(i)
-  }
-
-});
-
 //    ___  ____  __  ________________
 //   / _ \/ __ \/ / / /_  __/ __/ __/
 //  / , _/ /_/ / /_/ / / / / _/_\ \  
@@ -138,7 +72,7 @@ serialport.list(function (err, ports) {
 
 var routes = require('./routes/index')(app,io,cli,db);
 var io_listen = require('./routes/io_listen')(io,cli,db);
-var grblweb = require('./routes/grblweb')(io,cli,db,sp,allPorts);
+var grblweb = require('./routes/grblweb')(io,cli,db);
 
 // view engine setup
 app.engine('html', swig.renderFile);
