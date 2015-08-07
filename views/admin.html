@@ -155,7 +155,7 @@
 	});
 
 	$('#print').click(function(e){
-		if($('#print').html=='列印'){
+		if($('#print').html()=='列印'){
 			$.ajax({
 				type: 'POST',
 				url: '/id/'+select_id,
@@ -172,7 +172,7 @@
 				    }
 				}
 			});
-		} else if ($('#print').html=='停止列印') {
+		} else if ($('#print').html()=='停止列印') {
 			$('#clearQ').click();
 		}
 	});
