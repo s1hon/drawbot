@@ -1,8 +1,6 @@
-module.exports = function(io,cli,db) {
+module.exports = function(io,cli,db,sp,allPorts) {
 
 	var config = require('./config');
-	var serialport = require("serialport");
-	var SerialPort = serialport.SerialPort; // localize object constructor
 	var fs = require('fs');
 	var EventEmitter = require('events').EventEmitter;
 	var qs = require('querystring');
@@ -17,57 +15,6 @@ module.exports = function(io,cli,db) {
 	  return str.replace( /[<&>'"#]/g, function(s) { return c[s]; } );
 	}
 
-	var sp = [];
-	var allPorts = [];
-
-	serialport.list(function (err, ports) {
-		return 0;
-
-		// if on rPi - http://www.hobbytronics.co.uk/raspberry-pi-serial-port
-		if (fs.existsSync('/dev/ttyAMA0') && config.usettyAMA0 == 1) {
-			ports.push({comName:'/dev/ttyAMA0',manufacturer: undefined,pnpId: 'raspberryPi__GPIO'});
-			console.log('adding /dev/ttyAMA0 because it is enabled in config.js, you may need to enable it in the os - http://www.hobbytronics.co.uk/raspberry-pi-serial-port');
-		}
-
-		allPorts = ports;
-
-		for (var i=0; i<ports.length; i++) {
-		!function outer(i){
-
-			sp[i] = {};
-			sp[i].port = ports[i].comName;
-			sp[i].q = [];
-			sp[i].qCurrentMax = 0;
-			sp[i].lastSerialWrite = [];
-			sp[i].lastSerialReadLine = '';
-			// 1 means clear to send, 0 means waiting for response
-			sp[i].handle = new SerialPort(ports[i].comName, {
-				parser: serialport.parsers.readline("\n"),
-				baudrate: config.serialBaudRate
-			});
-			sp[i].sockets = [];
-
-			sp[i].handle.on("open", function() {
-
-				console.log('connected to '+sp[i].port+' at '+config.serialBaudRate);
-
-				// line from serial port
-				sp[i].handle.on("data", function (data) {
-					serialData(data, i);
-				});
-
-				// loop for status ?
-				setInterval(function() {
-					// console.log('writing ? to serial');
-					sp[i].handle.write('?');
-				}, 1000);
-
-			});
-
-		}(i)
-		}
-
-	});
 
 	function emitToPortSockets(port, evt, obj) {
 		for (var i=0; i<sp[port].sockets.length; i++) {
@@ -183,9 +130,7 @@ module.exports = function(io,cli,db) {
 	io.sockets.on('connection', function (socket) {
 
 		socket.emit('ports', allPorts);
-		cli.info(allPorts);
 		socket.emit('config', config);
-		cli.info(config);
 
 		// do soft reset, this has it's own clear and direct function call
 		socket.on('doReset', function (data) {
