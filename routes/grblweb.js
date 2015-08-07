@@ -7,8 +7,6 @@ module.exports = function(io,cli,db) {
 	var EventEmitter = require('events').EventEmitter;
 	var qs = require('querystring');
 
-
-
 	function ConvChar( str ) {
 	  c = {'<':'&lt;', 
 	  		'>':'&gt;', 
@@ -177,7 +175,7 @@ module.exports = function(io,cli,db) {
 		for (var i=0; i<sp[port].sockets.length; i++) {
 			sp[port].sockets[i].emit('serialRead', {'line':'<span style="color: black;">SEND: '+t+'</span>'+"\n"});
 		}
-		sp[port].handle.write(t+"\n")
+		sp[port].handle.write(t+"\n");
 		sp[port].lastSerialWrite.push(t);
 	}
 
@@ -185,7 +183,9 @@ module.exports = function(io,cli,db) {
 	io.sockets.on('connection', function (socket) {
 
 		socket.emit('ports', allPorts);
+		cli.info(allPorts);
 		socket.emit('config', config);
+		cli.info(config);
 
 		// do soft reset, this has it's own clear and direct function call
 		socket.on('doReset', function (data) {
