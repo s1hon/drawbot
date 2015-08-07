@@ -74,15 +74,22 @@
 		<pre id="console"></pre>
 		<div style="text-align:center;">
 			<div id="wPosition" class="control_btm">
-					<div id="wX" class="w">X: 0.000</div>
-					<div id="wY" class="w">Y: 0.000</div>
-					<div id="wZ" class="w">Z: 0.000</div>
 					<button type="button" class="btn btn-default" id="sendZero">Zero Machine (G92)</button>
 					<button type="button" class="btn btn-default" id="sendReset">RESET (ctrl-x)</button>
 					<button type="button" class="btn btn-success" id="sendGrblHelp">help ($)</button>
-					<button type="button" class="btn btn-success" id="sendGrblSettings">settings ($$)</button>	
+					<button type="button" class="btn btn-success" id="sendGrblSettings">settings ($$)</button>
+					<div id="wX" class="w">X: 0.000</div>
+					<div id="wY" class="w">Y: 0.000</div>
+					<div id="wZ" class="w">Z: 0.000</div>
+					<span id="qu" class="input-group-btn text-right">
+						<button type="button" class="btn btn-default disabled" id="qStatus">0/0</button>
+						<button type="button" class="btn btn-default" id="pause">Pause</button>
+						<button type="button" class="btn btn-default disabled" id="clearQ">Clear Queue</button>
+					</span>
 			</div>
+
 		</div>
+			
 		<div class="comn">
 			<div class="text">指令輸入區</div>
 			<textarea id="command" ></textarea>
@@ -163,4 +170,5 @@
 	});
 
 </script>
+<script src="js/machine.js"></script>
 {% endblock %}

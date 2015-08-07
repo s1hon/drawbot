@@ -72,6 +72,7 @@ app.use(function (req, res, next) {
 
 var routes = require('./routes/index')(app,io,cli,db);
 var io_listen = require('./routes/io_listen')(io,cli,db);
+var grblweb = require('./routes/grblweb')(io,cli,db);
 
 // view engine setup
 app.engine('html', swig.renderFile);
