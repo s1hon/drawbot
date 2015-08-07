@@ -25,7 +25,7 @@ module.exports = function(io,cli,db) {
 		// if on rPi - http://www.hobbytronics.co.uk/raspberry-pi-serial-port
 		if (fs.existsSync('/dev/ttyAMA0') && config.usettyAMA0 == 1) {
 			ports.push({comName:'/dev/ttyAMA0',manufacturer: undefined,pnpId: 'raspberryPi__GPIO'});
-			console.log('adding /dev/ttyAMA0 because it is enabled in config.js, you may need to enable it in the os - http://www.hobbytronics.co.uk/raspberry-pi-serial-port');
+			cli.log('adding /dev/ttyAMA0 because it is enabled in config.js, you may need to enable it in the os - http://www.hobbytronics.co.uk/raspberry-pi-serial-port');
 		}
 
 		allPorts = ports;
@@ -48,7 +48,7 @@ module.exports = function(io,cli,db) {
 
 			sp[i].handle.on("open", function() {
 
-				console.log('connected to '+sp[i].port+' at '+config.serialBaudRate);
+				cli.info('connected to '+sp[i].port+' at '+config.serialBaudRate);
 
 				// line from serial port
 				sp[i].handle.on("data", function (data) {
@@ -57,7 +57,7 @@ module.exports = function(io,cli,db) {
 
 				// loop for status ?
 				setInterval(function() {
-					// console.log('writing ? to serial');
+					// cli.log('writing ? to serial');
 					sp[i].handle.write('?');
 				}, 1000);
 
@@ -168,7 +168,7 @@ module.exports = function(io,cli,db) {
 			sendFirstQ(port);
 			return;
 		}
-		//console.log('sending '+t+' ### '+sp[port].q.length+' current q length');
+		//cli.log('sending '+t+' ### '+sp[port].q.length+' current q length');
 
 		// loop through all registered port clients
 		for (var i=0; i<sp[port].sockets.length; i++) {
@@ -228,10 +228,10 @@ module.exports = function(io,cli,db) {
 		socket.on('pause', function(data) {
 			// pause queue
 			if (data == 1) {
-				console.log('pausing queue');
+				cli.log('pausing queue');
 				queuePause = 1;
 			} else {
-				console.log('unpausing queue');
+				cli.log('unpausing queue');
 				queuePause = 0;
 				sendFirstQ(currentSocketPort[socket.id]);
 			}
@@ -252,8 +252,8 @@ module.exports = function(io,cli,db) {
 
 		socket.on('usePort', function (data) {
 
-			console.log('user wants to use port '+data);
-			console.log('switching from '+currentSocketPort[socket.id]);
+			cli.info('user wants to use port '+data);
+			cli.info('switching from '+currentSocketPort[socket.id]);
 
 			if (typeof currentSocketPort[socket.id] != 'undefined') {
 				for (var c=0; c<sp[currentSocketPort[socket.id]].sockets.length; c++) {
