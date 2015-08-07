@@ -149,6 +149,10 @@ html {
 				margin: 8px 10px 0 10px;
 				float: left;
 			}
+
+			.form-control{
+				width: 300px;
+			}
 		}
 	}
 
@@ -374,6 +378,10 @@ html {
 	    width: 100%;
 	    text-align: left;
 	    background-color: #ddd;
+
+	    p{
+	    	margin: 0 0 1px;
+	    }
 	}
 
 	.control_btm{
@@ -394,6 +402,10 @@ html {
 
 		button{
 			margin: 3px 0 5px 10px;
+		}
+
+		.sendgc{
+			float: left;
 		}
 
 	}
