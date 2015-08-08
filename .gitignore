@@ -1,6 +1,6 @@
 #db
 *.db
-
+sftp-config.json
 
 #user-pic
 user-pic
