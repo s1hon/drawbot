@@ -21,6 +21,7 @@ module.exports = function(io,cli,db) {
 	var allPorts = [];
 
 	serialport.list(function (err, ports) {
+		if(!ports) return 0;
 
 		// if on rPi - http://www.hobbytronics.co.uk/raspberry-pi-serial-port
 		if (fs.existsSync('/dev/ttyAMA0') && config.usettyAMA0 == 1) {
