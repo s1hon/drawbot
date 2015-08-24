@@ -243,20 +243,20 @@ html {
 
 	// 列表
 	.gallery{
-		width: 90%;
+		width: 100%;
 		margin:0px auto;
 	}
 
 	.items{
 		float: left;
-		margin: 20px 20px 20px 20px;
+		margin: 20px 10px 20px 10px;
 		border-style:solid;
 		-webkit-border-radius: 10px;
 		-moz-border-radius: 10px;
 		border-radius: 10px;
 		
 		img {
-			width: 230px;
+			width: 215px;
 		}
 		
 		.status{
@@ -365,76 +365,114 @@ html {
 	background: $background;
 }
 
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+
 .table-cell{
 	@media screen and (max-width: 1200px) {
 		display: none;
 		
 	}
-
-	height: 100%;
+	
 	overflow: hidden;
-	#console {
-	    height: 42%;
-	    width: 100%;
-	    text-align: left;
-	    background-color: #ddd;
+	float: left;
+	// width: 100%;
+    // margin: 0 auto;
+	padding-bottom: 20px;
+	padding-top: 20px;
 
-	    p{
-	    	margin: 0 0 1px;
-	    }
+	#console-left{
+		float: left;
+		width: 50%;
+		padding-left: 20px;
+		box-sizing: border-box;
+
+
+		#console {
+			float: left;
+		    height: 180px;
+		    width: 100%;
+		    text-align: left;
+		    background-color: #ddd;
+
+		    p{
+		    	margin: 0 0 1px;
+		    }
+		}
+
+		.control_btm{
+
+			// margin: 0px auto;
+			clear: both;
+
+			.w{
+				clear: right;
+				float: left;
+				background: gray;
+				text-align: center;
+				margin: 8px;
+				font-size: 30px;
+				width: 180px;
+				border: 1px solid #aaa;
+				font-weight: bold;
+			}
+
+			button{
+				margin: 3px 0 5px 10px;
+			}
+
+			.sendgc{
+				float: left;
+			}
+
+			#autoHome{
+				margin-left: 10px;
+			}
+
+		}
+
 	}
 
-	.control_btm{
-		margin: 0px auto;
-		clear: both;
+	#console-right{
+		float: left;
+		width: 50%;
 
-		.w{
-			clear: right;
+		.control_btm{
+			float: right;
+			button{
+				margin: 3px 0 0px 10px;
+			}
+		}
+
+
+		.comn{
 			float: left;
-			background: gray;
-			text-align: center;
-			margin: 4px;
-			font-size: 30px;
-			width: 190px;
-			border: 1px solid #aaa;
-			font-weight: bold;
-		}
-
-		button{
-			margin: 3px 0 5px 10px;
-		}
-
-		.sendgc{
-			float: left;
-		}
-
-		#autoHome{
-			margin-left: 10px;
-		}
-
-	}
-
-	.comn{
-		height: 45%;
-		width: 100%;
-		clear: both;
-	    position: relative;
-
-		.text{
-			font-size: 50px;
-		    color: gray;
-    		text-align: right;
-		}
-
-		#command {
-			background: rgba(100%,100%,100%,0.5);
-			height: 100%;
+			height: 250px;
 			width: 100%;
-			overflow: auto;
+			// clear: both;
+		    position: relative;
 
-			position:absolute;
-		    left:0;
-		    top:0;
-		}	
+			.text{
+				font-size: 50px;
+			    color: gray;
+	    		text-align: right;
+			}
+
+			#command {
+				background: rgba(100%,100%,100%,0.5);
+				height: 100%;
+				width: 100%;
+				overflow: auto;
+
+				position:absolute;
+			    left:0;
+			    top:0;
+			}	
+		}
 	}
+
 }

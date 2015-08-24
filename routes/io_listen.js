@@ -35,6 +35,18 @@ module.exports = function(io,cli,db) {
 			}
 		});
 
+		socket.on('machine', function (data){
+			if(data.status=='finish'){
+				db.run('UPDATE prints set status="done" WHERE status="printing"',function(err){
+					if(err){
+						cli.err(err);
+					}
+					io.emit('server', { server: 'reload' });
+					cli.info('DONE PRINTING');
+				});
+			}
+		});
+
 	});
 
 

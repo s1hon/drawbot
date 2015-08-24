@@ -2,6 +2,7 @@ module.exports = function(app, io, cli, db){
 
 	var fs = require('fs');
 	var mkdirp = require("mkdirp");
+	var PythonShell = require('python-shell');
 
 	// `7MM"""Mq.   .g8""8q. `7MMF'   `7MF'MMP""MM""YMM `7MM"""YMM  
 	//   MM   `MM..dP'    `YM. MM       M  P'   MM   `7   MM    `7  
@@ -118,13 +119,14 @@ module.exports = function(app, io, cli, db){
 							});
 						}
 					}else{
+						// Start Printing
 						db.run('UPDATE prints set status="printing" WHERE id="'+pid+'"',function(err){
 							if(err){
 								cli.err(err);
-								res.status(403).send('STOP FAIL');	
+								res.status(403).send('FAIL');
 							}
 							cli.info('START PRINTING: '+pid);
-							io.emit('server', { server: 'reload' });
+							Call_Converter(pid);
 							res.sendStatus(200);
 						});
 					}
@@ -291,6 +293,35 @@ module.exports = function(app, io, cli, db){
 
 			}
 		});
+	}
+
+	// 呼叫外部轉換程式
+	function Call_Converter(pid){
+
+		var a = '';
+		var options = {
+			mode: 'text',
+			// pythonOptions: ['-u'],
+			scriptPath: 'script/python',
+			args: [pid],
+		};
+
+		var pyshell =  new PythonShell('gcode_converter.py', options);
+
+		pyshell.on('message',function(message){
+				a = a + message + '\n'
+		});
+
+
+		
+		setTimeout(function() { io.emit('serialRead', {'line':'<span style="color: green;">RESP: Gcode 產生中... </span>'}); }, 2000);
+		pyshell.end(function (err) {
+			if (err) throw err ;
+			io.emit('getgcode', { line: a });
+			setTimeout(function() { io.emit('serialRead', {'line':'<span style="color: green;">RESP: 開始繪製 </span>'}); }, 1000);
+		});
+
+
 	}
 
 };

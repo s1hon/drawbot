@@ -145,6 +145,20 @@ module.exports = function(io,cli,db) {
 		// update q status
 		emitToPortSockets(port, 'qStatus', {'currentLength':sp[port].q.length, 'currentMax':sp[port].qCurrentMax});
 
+		if ( sp[port].q.length == 0 & sp[port].qCurrentMax == 0 ){
+			db.all('SELECT * FROM prints WHERE status="printing"', function(err, print_now){
+				if(print_now.length != 0) {
+					db.run('UPDATE prints set status="done" WHERE status="printing"',function(err){
+						if(err){
+							cli.err(err);
+						}
+						io.emit('server', { server: 'reload' });
+						cli.info('DONE  PRINTING: '+ print_now[0]['id']);
+					});
+				}
+			});
+		}
+
 		sp[port].lastSerialReadLine = data;
 
 	}
@@ -229,10 +243,10 @@ module.exports = function(io,cli,db) {
 		socket.on('pause', function(data) {
 			// pause queue
 			if (data == 1) {
-				cli.log('pausing queue');
+				// cli.log('pausing queue');
 				queuePause = 1;
 			} else {
-				cli.log('unpausing queue');
+				// cli.log('unpausing queue');
 				queuePause = 0;
 				sendFirstQ(currentSocketPort[socket.id]);
 			}
@@ -253,8 +267,8 @@ module.exports = function(io,cli,db) {
 
 		socket.on('usePort', function (data) {
 
-			cli.info('user wants to use port '+data);
-			cli.info('switching from '+currentSocketPort[socket.id]);
+			// cli.info('user wants to use port '+data);
+			// cli.info('switching from '+currentSocketPort[socket.id]);
 
 			if (typeof currentSocketPort[socket.id] != 'undefined') {
 				for (var c=0; c<sp[currentSocketPort[socket.id]].sockets.length; c++) {
