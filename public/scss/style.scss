@@ -177,8 +177,8 @@ html {
 		#camera{
 
 			#video {
-			  width:1024px;
-			  height:768px;
+			  width:900px;
+			  height:675px;
 			}
 		}
 
@@ -188,8 +188,8 @@ html {
 	}
 
 	.cam-preview{
-		height: 768px;
-		width: 1024px;
+		height: 675px;
+		width: 900px;
 		background: #636363;
 		float: left;
 
@@ -205,11 +205,11 @@ html {
 
 	.cam-control{
 		position: relative;
-		top: 450px;
+		top: 100px;
 		left: 50px;
 		float: left;
-		height: 300px;
-		width: 480px;
+		height: 350px;
+		width: 900px;
 		// background: #F00;
 
 		p{
@@ -373,7 +373,7 @@ html {
 
 
 .table-cell{
-	@media screen and (max-width: 1200px) {
+	@media screen and (max-width: 800px) {
 		display: none;
 		
 	}
@@ -382,6 +382,7 @@ html {
 	float: left;
 	// width: 100%;
     // margin: 0 auto;
+	box-sizing: border-box;
 	padding-bottom: 20px;
 	padding-top: 20px;
 
@@ -415,8 +416,8 @@ html {
 				background: gray;
 				text-align: center;
 				margin: 8px;
-				font-size: 30px;
-				width: 180px;
+				font-size: 28px;
+				width: 135px;
 				border: 1px solid #aaa;
 				font-weight: bold;
 			}
