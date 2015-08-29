@@ -177,8 +177,9 @@ html {
 		#camera{
 
 			#video {
-			  width:900px;
-			  height:675px;
+				width:900px;
+				height:675px;
+				transform: rotateY(180deg);
 			}
 		}
 
