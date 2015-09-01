@@ -306,7 +306,7 @@ module.exports = function(app, io, cli, db){
 			args: [pid],
 		};
 
-		var pyshell =  new PythonShell('gcode_converter.py', options);
+		var pyshell =  new PythonShell('pic_main.py', options);
 
 		pyshell.on('message',function(message){
 				a = a + message + '\n'
