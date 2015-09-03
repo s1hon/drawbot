@@ -33,7 +33,7 @@ def remove_background(imgo) :
 	final = background + img1
 	gray_pic = cv2.cvtColor(final, cv2.COLOR_BGR2GRAY)
 	imghsv = cv2.cvtColor(final, cv2.COLOR_BGR2HSV)
-	imghls = cv2.cvtColor(imgo, cv2.COLOR_BGR2HLS)
+	imghls = cv2.cvtColor(final, cv2.COLOR_BGR2HLS)
 
 	return final, gray_pic, imghsv,imghls
 
@@ -68,7 +68,7 @@ def GetFaceHSV_HairColor(imgo, gray):
 
 	# Find color on gray & use bgr2hsv on imgo point
 	FaceHsv = FindfaceColor(imgo, gray, maxCounter_color, faces)
-
+	print '(',FaceHsv,')'
 
 	# ============================================================
 	# Get Hair GRB
@@ -91,7 +91,7 @@ def GetFaceHSV_HairColor(imgo, gray):
 			maxCounter_color = color
 
 	HairHsl = FindhairColor(imgo, gray, maxCounter_color, faces)
-	print '(',HairHsl,')'
+	# print '(',HairHsl,')'
 
 	ranges = [HairHsl,FaceHsv]
 	return ranges
@@ -104,7 +104,7 @@ def FindfaceColor(imgo, gray, color, faces):
 		for x1 in range(y,y+w):
 			for y1 in range(x,x+h):
 				if gray[x1-1][y1-1] == color :
-					faceHsv = cv2.cvtColor(np.uint8([[ imgo[x1-1][y1-1] ]]),cv2.COLOR_BGR2HSV)
+					faceHsv = cv2.cvtColor(np.uint8([[ imgo[x1-1][y1-1] ]]),cv2.COLOR_BGR2HLS)
 					return faceHsv[0][0]
 
 def FindhairColor(imgo, gray, color, faces):
