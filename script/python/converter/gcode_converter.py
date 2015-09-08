@@ -32,10 +32,9 @@ def remove_background(imgo) :
 	#Add the background and the image
 	final = background + img1
 	gray_pic = cv2.cvtColor(final, cv2.COLOR_BGR2GRAY)
-	imghsv = cv2.cvtColor(final, cv2.COLOR_BGR2HSV)
 	imghls = cv2.cvtColor(final, cv2.COLOR_BGR2HLS)
 
-	return final, gray_pic, imghsv,imghls
+	return final, gray_pic, imghls
 
 
 def GetFaceHSV_HairColor(imgo, gray):
@@ -55,6 +54,7 @@ def GetFaceHSV_HairColor(imgo, gray):
 
 	# Counting color
 	for (x,y,w,h) in faces:
+		print '( Face : ','x:',x,' y:',y,' w:',w,'h: ',h,' )'
 		for x1 in range(y,y+w):
 			for y1 in range(x,x+h):
 				color = gray[x1-1][y1-1]
@@ -66,36 +66,36 @@ def GetFaceHSV_HairColor(imgo, gray):
 			maxCounter = counter[color]
 			maxCounter_color = color
 
-	# Find color on gray & use bgr2hsv on imgo point
-	FaceHsv = FindfaceColor(imgo, gray, maxCounter_color, faces)
-	print '(',FaceHsv,')'
+	faceHls = FindfaceColor(imgo, gray, maxCounter_color, faces)
+
 
 	# ============================================================
 	# Get Hair GRB
 
-	counter = [0] * 256
-	maxCounter = 0
-	maxCounter_color = None
+	# counter = [0] * 256
+	# maxCounter = 0
+	# maxCounter_color = None
 
-	# Counting color
-	for (x,y,w,h) in faces:
-		for x1 in range(y,y+w):
-			for y1 in range(x,x/2,-1):
-				color = gray[x1-1][y1-1]
-				counter[color] = counter[color] + 1
+	# # Counting color
+	# for (x,y,w,h) in faces:
+	# 	for x1 in range(y,y+w):
+	# 		for y1 in range(x,x/2,-1):
+	# 			color = gray[x1-1][y1-1]
+	# 			counter[color] = counter[color] + 1
 
-	# Find max color 0-254
-	for color in range(0,255) :
-		if  counter[color] > maxCounter :
-			maxCounter = counter[color]
-			maxCounter_color = color
+	# # Find max color 0-254
+	# for color in range(0,255) :
+	# 	if  counter[color] > maxCounter :
+	# 		maxCounter = counter[color]
+	# 		maxCounter_color = color
 
-	HairHsl = FindhairColor(imgo, gray, maxCounter_color, faces)
-	# print '(',HairHsl,')'
+	# hairHsl = FindhairColor(imgo, gray, maxCounter_color, faces)
 
-	ranges = [HairHsl,FaceHsv]
+	# ranges = [hairHsl,faceHls]
+	
+	ranges = [0,faceHls]
 	return ranges
-
+	
 
 def FindfaceColor(imgo, gray, color, faces):
 
@@ -104,106 +104,144 @@ def FindfaceColor(imgo, gray, color, faces):
 		for x1 in range(y,y+w):
 			for y1 in range(x,x+h):
 				if gray[x1-1][y1-1] == color :
-					faceHsv = cv2.cvtColor(np.uint8([[ imgo[x1-1][y1-1] ]]),cv2.COLOR_BGR2HLS)
-					return faceHsv[0][0]
+					faceHls = cv2.cvtColor(np.uint8([[ imgo[x1-1][y1-1] ]]),cv2.COLOR_BGR2HLS)
+					return faceHls[0][0]
 
-def FindhairColor(imgo, gray, color, faces):
-	for (x,y,w,h) in faces:
-		for x1 in range(y,y+w):
-			for y1 in range(x,x/2,-1):
-				if gray[x1-1][y1-1] == color :
-					HairHsl = cv2.cvtColor(np.uint8([[ imgo[x1-1][y1-1] ]]),cv2.COLOR_BGR2HLS)
-					return HairHsl[0][0]
+def GetImgMask (imgHls, ranges):
 
-def Color_InRange_Searcher(gray, imgHsv, imgHls, ranges) :
+	lower_hair = np.array( [0, 0, 0] )
+	upper_hair = np.array( [180, 50, 100] )
 
-	height, width = gray.shape[:2]
+
+	print '( Face :',ranges[1],')'
+
+	if ranges[1] != None :
+		lower_face = np.array( [ 0,ranges[1][1]-30,ranges[1][2]-30 ] )
+		upper_face = np.array( [ 180,ranges[1][1]+30,ranges[1][2]+30 ] )
+	else :
+		print '( Can not find any faces. )'
+		lower_face = np.array( [0,60,60] )
+		upper_face = np.array( [180,255,255] )
+
+	maskHair = cv2.inRange(imgHls, lower_hair, upper_hair)
+	maskFace = cv2.inRange(imgHls, lower_face, upper_face)
+
+	return maskHair, maskFace
+
+
+def Color_InRange_Searcher(maskHair, maskFace) :
+
+	height, width = maskHair.shape[:2]
 	#height -> 240 
 	#width -> 320
 
-
+	points = []
+	HairPoint = []
+	FacePoint = []
+	
+	# ===================================
 	# Hair
-	Hair=ranges[0]
-	Face=ranges[1]
+	x,y = 0,0
+	while x < height :
+		while y < width :
+			if y != 0 :
+				if maskHair[x][y-1] == 255 &  maskHair[x][y] == 255 :
+					y = y + 1
+					if y == width :
+						HairPoint.append([x,y])
+					elif maskHair[x][y] == 0 :
+						HairPoint.append([x,y])
+					continue
 
-	point = []
-	HLS_tmp = []
-	HSV_tmp = []
-	counter = [None] * 256
+			if maskHair[x][y] == 255 :
+				HairPoint.append([x,y])
+				try:
+					if maskHair[x][y+1] == 0 :
+						HairPoint.append([x,y+1])
+				except IndexError :
+					HairPoint.append([x,y+1])
 
-	# 將範圍中的點集合起來
+			y = y+1
+		y = 0
+		x = x+1
+
+
+	# ===================================
+	# Face
+	# x,y = 0,0
+	# while x < height :
+	# 	while y < width :
+	# 		if y != 0 :
+	# 			if maskFace[x][y-1] == 255 & maskFace[x][y] == 255 :
+	# 				y = y + 1
+	# 				if y == width :
+	# 					FacePoint.append([x,y])
+	# 				elif maskFace[x][y] == 0 :
+	# 					FacePoint.append([x,y])
+	# 				continue
+
+	# 		if maskFace[x][y] == 255 :
+	# 			FacePoint.append([x,y])
+	# 			try:
+	# 				if maskFace[x][y+1] == 0 :
+	# 					FacePoint.append([x,y+1])
+	# 			except IndexError:
+	# 				FacePoint.append([x,y+1])
+
+	# 		y = y+1
+	# 	y = 0
+	# 	x = x+1
+
+
 	for x in range(0,height-1):
 		for y in range(0,width-1):
 
-			HLScolor = imgHls[x-1][y-1]
-			HSVcolor = imgHsv[x-1][y-1]
+			# HairM = maskHair[x-1][y-1]
+			FaceM = maskFace[x][y]
 
-			# HLS
-			if HSLinRange(HLScolor,Hair) :
-				HLS_tmp.append([x-1,y-1])
+			# if HairM == 255 :
+				# HairPoint.append([x-1,y-1])
 
-			# HSV
-			if HSVinRange(HSVcolor,Face) :
-				HSV_tmp.append([x-1,y-1])
+			if FaceM == 255 :
+				FacePoint.append([x,y])
 
+	points.append(HairPoint)
+	points.append(FacePoint)
 
-	# point.append(HLS_tmp)
-	point.append(HLS_tmp)
-	point.append(HSV_tmp)
-
-	return point
-
-def HSVinRange(HSVcolor,Face):
-
-	H=[Face[0]-10,Face[0]+10]
-	S=[Face[1]-10,255]
-	V=[60,255]
-
-	if  H[0] <= HSVcolor[0] <= H[1] and S[0] <= HSVcolor[1] <= S[1] and V[0] <= HSVcolor[2] <= V[1]:
-		return 1
-	else:
-		return 0
-
-def HSLinRange(HSLcolor,Hair):
-
-	H=[Hair[0]-10,Hair[0]+10]
-	S=[Hair[1]-5,Hair[1]+5]
-	L=[Hair[2]-6,Hair[2]+6]
-
-	if  H[0] <= HSLcolor[0] <= H[1] and S[0] <= HSLcolor[1] <= S[1] and L[0] <= HSLcolor[2] <= L[1]:
-		return 1
-	else:
-		return 0
+	return points
 
 def line_optimization(points):
 
 	# 線條最佳化 
 	# Old: 1-2-3-4-5  New: 1-5
 	points_tmp = []
-	for point in points:
-		point_tmp = []
-		tmp = 0
-		id = 0 	
-		while id < len(point):
-			try :
-				# when X on same line
-				if point[id][0] == point[id+1][0] :
-					point_tmp.append(point[id])
-					try :
-						while point[id+1][1]-point[id][1]==1 :
-							tmp = point[id]
-							id = id + 1
-						else :
-							point_tmp.append(point[id])
-					except IndexError:
-						point_tmp.append(point[id])
-				# when X to next line
-				else :
-					point_tmp.append(point[id])
-			except IndexError:
+
+	point = points[1]
+	point_tmp = []
+	tmp = 0
+	id = 0 	
+	while id < len(point):
+		try :
+			# when X on same line
+			if point[id][0] == point[id+1][0] :
 				point_tmp.append(point[id])
-			id = id + 1
-		points_tmp.append(point_tmp)
+				try :
+					while point[id+1][1]-point[id][1]==1 :
+						tmp = point[id]
+						id = id + 1
+					else :
+						point_tmp.append(point[id])
+				except IndexError:
+					point_tmp.append(point[id])
+			# when X to next line
+			else :
+				point_tmp.append(point[id])
+		except IndexError:
+			point_tmp.append(point[id])
+		id = id + 1
+
+	points_tmp.append(points[0])
+	points_tmp.append(point_tmp)
 	return points_tmp
 
 
@@ -238,9 +276,6 @@ def gcode_generator(points) :
 
 	point = points[0]
 	best_point = point[0]
-
-	if len(point) %2 != 0 :
-		point = point[:-1]
 	
 	while len(point) != 0 :
 
