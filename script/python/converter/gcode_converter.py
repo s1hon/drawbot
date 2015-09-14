@@ -144,6 +144,12 @@ def Color_InRange_Searcher(maskHair, maskFace) :
 	x,y = 0,0
 	while x < height :
 		while y < width :
+
+			# Face
+			if maskFace[x][y] == 255 :
+				FacePoint.append([x,y])
+
+			# Hair
 			if y != 0 :
 				if maskHair[x][y-1] == 255 &  maskHair[x][y] == 255 :
 					y = y + 1
@@ -193,17 +199,17 @@ def Color_InRange_Searcher(maskHair, maskFace) :
 	# 	x = x+1
 
 
-	for x in range(0,height-1):
-		for y in range(0,width-1):
+	# for x in range(0,height-1):
+	# 	for y in range(0,width-1):
 
-			# HairM = maskHair[x-1][y-1]
-			FaceM = maskFace[x][y]
+	# 		# HairM = maskHair[x-1][y-1]
+	# 		FaceM = maskFace[x][y]
 
-			# if HairM == 255 :
-				# HairPoint.append([x-1,y-1])
+	# 		# if HairM == 255 :
+	# 			# HairPoint.append([x-1,y-1])
 
-			if FaceM == 255 :
-				FacePoint.append([x,y])
+	# 		if FaceM == 255 :
+	# 			FacePoint.append([x,y])
 
 	points.append(HairPoint)
 	points.append(FacePoint)
