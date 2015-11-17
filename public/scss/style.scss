@@ -47,6 +47,7 @@ html {
 		left: -400px;
 		width: 400px;
 		background: $side-bar-color;
+		z-index: 2;
 		
 		.menu-logo{
 			margin: 20px ;
@@ -218,7 +219,7 @@ html {
 		height: 350px;
 		width: 900px;
 		// background: #F00;
-		z-index: 99;
+		z-index: 1;
 
 		p{
 		text-align:center;
