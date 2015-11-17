@@ -181,6 +181,11 @@ html {
 				height:675px;
 				transform: rotateY(180deg);
 			}
+
+			#photo {
+			    -webkit-transform: rotateY(180deg);
+				transform: rotateY(180deg);
+			}
 		}
 
 		#canvas {
@@ -193,6 +198,7 @@ html {
 		width: 900px;
 		background: #636363;
 		float: left;
+		position: absolute;
 
 		p{
 		    position: relative;
@@ -212,6 +218,7 @@ html {
 		height: 350px;
 		width: 900px;
 		// background: #F00;
+		z-index: 99;
 
 		p{
 		text-align:center;

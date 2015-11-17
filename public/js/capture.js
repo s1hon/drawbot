@@ -115,10 +115,9 @@ function takepicture() {
 		data_pic = canvas.toDataURL('image/png');
 
 		$('#camera').html(' <img id="photo" class="cam-preview" src="'+data_pic+'"> ');
-		videostream.stop();
-
 		$('.take_pic').toggle();
 		$('.chose_pic').toggle();
+		videostream.stop();
 	}
 
 }
