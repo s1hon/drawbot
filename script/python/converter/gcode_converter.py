@@ -37,7 +37,7 @@ def remove_background(imgo) :
 	return final, gray_pic, imghls
 
 
-def GetFaceHSV_HairColor(imgo, gray):
+def GetFaceRange(imgo, gray):
 
 	# face_detection(gray)
 	face_cascade = cv2.CascadeClassifier('script/python/haarcascade_frontalface_default.xml')

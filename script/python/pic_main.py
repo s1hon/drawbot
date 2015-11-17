@@ -7,7 +7,7 @@ np.set_printoptions(threshold='nan')
 res_imgo = cv2.imread('user-pic/'+ sys.argv[1] +'.png')
 imgo, imgGray, imgHls = gc.remove_background(res_imgo)
 
-ranges = gc.GetFaceHSV_HairColor(imgo,imgGray)
+ranges = gc.GetFaceRange(imgo,imgGray)
 maskHair, maskFace = gc.GetImgMask(imgHls, ranges)
 points = gc.Color_InRange_Searcher(maskHair, maskFace)
 points = gc.line_optimization(points)
